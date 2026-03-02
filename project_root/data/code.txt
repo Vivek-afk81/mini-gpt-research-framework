@@ -1,0 +1,46 @@
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+
+def factorial(n):
+    if n == 0:
+        return 1
+    return n * factorial(n-1)
+
+def sum_digits(n):
+    if n == 0:
+        return 0
+    return n % 10 + sum_digits(n // 10)
+
+def power(base, exp):
+    if exp == 0:
+        return 1
+    return base * power(base, exp - 1)
+
+def reverse_string(s):
+    if len(s) == 0:
+        return s
+    return s[-1] + reverse_string(s[:-1])
+
+def count_occurrences(lst, target):
+    if not lst:
+        return 0
+    return (1 if lst[0] == target else 0) + count_occurrences(lst[1:], target)
+
+def flatten(lst):
+    if not lst:
+        return []
+    if isinstance(lst[0], list):
+        return flatten(lst[0]) + flatten(lst[1:])
+    return [lst[0]] + flatten(lst[1:])
+
+for i in range(10):
+    print(fibonacci(i))
+
+print(factorial(5))
+print(sum_digits(1234))
+print(power(2, 8))
+print(reverse_string("recursion"))
+print(count_occurrences([1, 2, 3, 2, 4, 2], 2))
+print(flatten([1, [2, [3, 4]], [5, 6]]))

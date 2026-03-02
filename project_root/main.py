@@ -8,8 +8,6 @@ def load_raw_text(data_dir="data"):
         with open(file_path, "r", encoding="utf-8") as f:
             texts.append(f.read())
     
-    print("Looking inside:", data_path.resolve())
-    print("Files found:", list(data_path.glob("*.txt")))
     
     return "\n\n".join(texts)
 
