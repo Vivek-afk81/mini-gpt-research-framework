@@ -1,18 +1,36 @@
-from pathlib import Path
+import torch
+from torch.utils.data import DataLoader
+from src.data_loader import load_raw_text, GPTDatasetV1
+from src.tokenizer import GPT2Tokenizer
 
-def load_raw_text(data_dir="data"):
-    data_path = Path(data_dir)
-    texts = []
-    
-    for file_path in data_path.glob("*.txt"):
-        with open(file_path, "r", encoding="utf-8") as f:
-            texts.append(f.read())
-    
-    
-    return "\n\n".join(texts)
+def main():
+    # load raw text
+
+    raw_text=load_raw_text()
+    print("Total characters: ",len(raw_text))
+
+    #tokenizer
+    tokenizer=GPT2Tokenizer()
+
+    #encode text
+
+    token_ids=tokenizer.encode(raw_text)
+    print("Total tokens: ",len(token_ids))
+
+    #creating dataset
+    dataset=GPTDatasetV1(token_ids,max_length=64,stride=64)
+    print("Total sequences: ",len(dataset))
+
+    x,y=dataset[0]
+    print("\nInput shape:", x.shape)
+    print("\nTarget shape:", y.shape)
+
+    print("\nDecoded Input:")
+    print(tokenizer.decode(x.tolist()))
+
+    print("\nDecoded Target:")
+    print(tokenizer.decode(y.tolist()))
 
 
-if __name__ == "__main__":
-    raw_text = load_raw_text()
-    print("Total characters:", len(raw_text))
-    print(raw_text[:500])
+if __name__=="__main__": 
+    main()

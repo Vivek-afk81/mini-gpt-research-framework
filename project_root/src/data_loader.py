@@ -13,7 +13,7 @@ def load_raw_text(data_dir="data"):
     return "\n\n".join(text)
 
 class GPTDatasetV1(Dataset):
-    def __init__(self,text,token_ids,max_length=64,stride=64):
+    def __init__(self,token_ids,max_length=64,stride=64):
         self.input_ids=[]
         self.target_ids=[]
 
