@@ -9,7 +9,6 @@ def load_raw_text(data_dir="data"):
     for file_path in data_path.glob("*.txt"):
         with open(file_path,"r",encoding="utf-8") as f:
             text.append(f.read())
-    
     return "\n\n".join(text)
 
 class GPTDatasetV1(Dataset):
