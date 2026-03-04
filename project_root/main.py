@@ -1,7 +1,10 @@
 import torch
 from torch.utils.data import DataLoader
+import torch.nn.functional as F
+
 from src.data_loader import load_raw_text, GPTDatasetV1
 from src.tokenizer import GPT2Tokenizer
+from src.model.baseline_lm import BaselineLM
 
 def main():
     # load raw text
@@ -35,12 +38,26 @@ def main():
 
     dataloader= DataLoader(dataset,batch_size=4,shuffle=True)
 
-    batch_x,batch_y=next(iter(dataloader))
+    # batch_x,batch_y=next(iter(dataloader))
 
-    print("\nBatch input shape: ",batch_x.shape)
-    print("\nBatch target shape: ",batch_y.shape)
-    print("\nFirst sample in batch (decoded):")
-    print(tokenizer.decode(batch_x[0].tolist()))
+    # print("\nBatch input shape: ",batch_x.shape)
+    # print("\nBatch target shape: ",batch_y.shape)
+    # print("\nFirst sample in batch (decoded):")
+    # print(tokenizer.decode(batch_x[0].tolist()))
+
+    vocab_size=tokenizer.tokenizer.n_vocab
+    model=BaselineLM(vocab_size)
+    batch_x, batch_y = next(iter(dataloader))
+
+    logits = model(batch_x)
+
+    print("Logits shape:", logits.shape)
+
+    loss = F.cross_entropy(
+        logits.view(-1, vocab_size),
+        batch_y.view(-1)
+    )
+    print("Loss:", loss.item())
 
 if __name__=="__main__": 
     main()
