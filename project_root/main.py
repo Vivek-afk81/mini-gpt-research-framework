@@ -5,6 +5,7 @@ import torch.nn.functional as F
 from src.data_loader import load_raw_text, GPTDatasetV1
 from src.tokenizer import GPT2Tokenizer
 from src.model.baseline_lm import BaselineLM
+from src.model.attention import SelfAttentionV1
 
 def main():
     # load raw text
@@ -58,6 +59,11 @@ def main():
         batch_y.view(-1)
     )
     print("Loss:", loss.item())
+
+    dummy_x=torch.randn(4,64,128)
+    attention=SelfAttentionV1(d_in=128,d_out=128)
+    context=attention(dummy_x)
+    print("Context shape:", context.shape)
 
 if __name__=="__main__": 
     main()
