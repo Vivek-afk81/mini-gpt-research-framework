@@ -25,26 +25,12 @@ def main():
     dataset=GPTDatasetV1(token_ids,max_length=64,stride=64)
     print("Total sequences: ",len(dataset))
 
-    # x,y=dataset[0]
-    # print("\nInput shape:", x.shape)
-    # print("\nTarget shape:", y.shape)
-
-    # print("\nDecoded Input:")
-    # print(tokenizer.decode(x.tolist()))
-
-    # print("\nDecoded Target:")
-    # print(tokenizer.decode(y.tolist()))
 
     #inspecting batches
 
     dataloader= DataLoader(dataset,batch_size=4,shuffle=True)
 
-    # batch_x,batch_y=next(iter(dataloader))
 
-    # print("\nBatch input shape: ",batch_x.shape)
-    # print("\nBatch target shape: ",batch_y.shape)
-    # print("\nFirst sample in batch (decoded):")
-    # print(tokenizer.decode(batch_x[0].tolist()))
 
     vocab_size=tokenizer.tokenizer.n_vocab
     model=BaselineLM(vocab_size)

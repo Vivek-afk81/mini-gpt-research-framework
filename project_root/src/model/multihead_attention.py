@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-class MultiHeadAttention(nn.Module):
+class MultiHeadCausalAttention(nn.Module):
     def __init__(self,d_model,num_heads,context_length,dropout=0.1):
         super().__init__()
 
@@ -10,9 +10,9 @@ class MultiHeadAttention(nn.Module):
         self.num_heads=num_heads
         self.head_dim=d_model//num_heads
 
-        self.W_q=nn.Linear(d_model,bias=False)
-        self.W_k=nn.Linear(d_model,bias=False)
-        self.W_v=nn.Linear(d_model,bias=False)
+        self.W_q=nn.Linear(d_model,d_model,bias=False)
+        self.W_k=nn.Linear(d_model,d_model,bias=False)
+        self.W_v=nn.Linear(d_model,d_model,bias=False)
 
         self.out_proj = nn.Linear(d_model,d_model)
         self.dropout=nn.Dropout(dropout)
@@ -29,8 +29,8 @@ class MultiHeadAttention(nn.Module):
         V=self.W_v(x)
 
         Q=Q.view(B,T,self.num_heads,self.head_dim).transpose(1,2)
-        K=Q.view(B,T,self.num_heads,self.head_dim).transpose(1,2)
-        V=Q.view(B,T,self.num_heads,self.head_dim).transpose(1,2)
+        K=K.view(B,T,self.num_heads,self.head_dim).transpose(1,2)
+        V=V.view(B,T,self.num_heads,self.head_dim).transpose(1,2)
 
         scores=Q @K.transpose(-2,-1)
         scores=scores/(self.head_dim**0.5)
