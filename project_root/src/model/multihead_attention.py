@@ -20,7 +20,7 @@ class MultiHeadCausalAttention(nn.Module):
         mask=torch.tril(torch.ones(context_length,context_length))
         self.register_buffer("mask",mask)
 
-    def forward(self,x):
+    def forward(self,x,return_weights=False):
 
         B,T,C=x.shape
 
@@ -45,5 +45,10 @@ class MultiHeadCausalAttention(nn.Module):
         context=context.transpose(1,2).contiguous().view(B,T,C)
 
         output=self.out_proj(context)
+
+        #inspecting the weights
+
+        if return_weights:
+            return output,weights
 
         return output
