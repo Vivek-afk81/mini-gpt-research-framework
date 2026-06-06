@@ -38,11 +38,6 @@ def main():
 
     logits = model(batch_x)
 
-    print("Logits shape:", logits.shape)
-    print("Logits min:", logits.min().item())
-    print("Logits max:", logits.max().item())
-    print("Logits mean:", logits.mean().item())
-    print("Logits std:", logits.std().item())
 
     loss = F.cross_entropy(
         logits.view(-1, vocab_size),
