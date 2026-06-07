@@ -40,11 +40,35 @@ def main():
     vocab_size=tokenizer.tokenizer.n_vocab
     model=BaselineLM(vocab_size)
     batch_x, batch_y = next(iter(dataloader))
-    print(batch_x.shape)
-    print(batch_y.shape)
+    print("First 20 token ids:")
+    print(token_ids[:20])
 
-    print(batch_x[0][:10])
-    print(batch_y[0][:10])
+    print()
+
+    print("Decoded:")
+    print(tokenizer.decode(token_ids[:20]))
+
+    print()
+
+    x,y = dataset[0]
+
+    print("Input:")
+    print(x)
+
+    print()
+
+    print("Target:")
+    print(y)
+
+    print()
+
+    print("Input decoded:")
+    print(tokenizer.decode(x.tolist()))
+
+    print()
+
+    print("Target decoded:")
+    print(tokenizer.decode(y.tolist()))
 
     logits = model(batch_x)
 
