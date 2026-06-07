@@ -31,27 +31,25 @@ class MultiHeadCausalAttention(nn.Module):
         Q=Q.view(B,T,self.num_heads,self.head_dim).transpose(1,2)
         K=K.view(B,T,self.num_heads,self.head_dim).transpose(1,2)
         V=V.view(B,T,self.num_heads,self.head_dim).transpose(1,2)
-        print("Q:",Q.shape)
-        print("K:",K.shape)
-        print("V:",V.shape)
+
 
         scores=Q @K.transpose(-2,-1)
         scores=scores/(self.head_dim**0.5)
-        print("Scores: ",scores.shape)
+
 
         scores=scores.masked_fill(self.mask[:T,:T]==0,float("-inf"))
 
         weights=torch.softmax(scores,dim=-1)
         weights=self.dropout(weights)
-        print("Weights: ",weights.shape)
+
 
         context=weights@V
 
         context=context.transpose(1,2).contiguous().view(B,T,C)
-        print("context: ",context.shape)
+
 
         output=self.out_proj(context)
-        print("Output: ",output.shape)
+
 
         #inspecting the weights
 

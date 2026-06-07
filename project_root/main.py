@@ -39,50 +39,34 @@ def main():
 
     vocab_size=tokenizer.tokenizer.n_vocab
     model=BaselineLM(vocab_size)
-    batch_x, batch_y = next(iter(dataloader))
-    print("First 20 token ids:")
-    print(token_ids[:20])
-
-    print()
-
-    print("Decoded:")
-    print(tokenizer.decode(token_ids[:20]))
-
-    print()
-
-    x,y = dataset[0]
-
-    print("Input:")
-    print(x)
-
-    print()
-
-    print("Target:")
-    print(y)
-
-    print()
-
-    print("Input decoded:")
-    print(tokenizer.decode(x.tolist()))
-
-    print()
-
-    print("Target decoded:")
-    print(tokenizer.decode(y.tolist()))
-
-    logits = model(batch_x)
-
-
-    loss = F.cross_entropy(
-        logits.view(-1, vocab_size),
-        batch_y.view(-1)
+    optimizer=torch.optim.AdamW(
+        model.parameters(),
+        lr=1e-3
     )
-    print("Loss:", loss.item())
 
-    dummy_x=torch.randn(4,64,128)
-    attention=CausalSelfAttention(d_in=128,d_out=128,context_length=64)
-    context=attention(dummy_x)
-    print("Context shape:", context.shape)
+    #TRAINING LOOP
+
+    num_epochs=3
+    for epoch in range(num_epochs):
+        total_loss=0
+
+        for batch_x,batch_y in dataloader:
+            optimizer.zero_grad()
+            logits=model(batch_x)
+
+            loss=F.cross_entropy(
+                logits.view(-1,vocab_size),
+                batch_y.view(-1)
+            )
+            loss.backward()
+            optimizer.step()
+            total_loss+=loss.item()
+        avg_loss=total_loss/len(dataloader)
+        print(f"Epoch {epoch+1}: {avg_loss:.4f}")
+
+
+
+
 
 if __name__=="__main__": 
     main()
