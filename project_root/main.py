@@ -13,13 +13,18 @@ def main():
     raw_text=load_raw_text()
     print("Total characters: ",len(raw_text))
 
+
     #tokenizer
     tokenizer=GPT2Tokenizer()
 
     #encode text
+    # token_ids=[]
 
     token_ids=tokenizer.encode(raw_text)
     print("Total tokens: ",len(token_ids))
+    # print("Encoded: ",token_ids[:100])
+    # decoded=tokenizer.decode(token_ids)
+    # print("Decoded: ",decoded[:100])
 
     #creating dataset
     dataset=GPTDatasetV1(token_ids,max_length=64,stride=64)
@@ -35,6 +40,11 @@ def main():
     vocab_size=tokenizer.tokenizer.n_vocab
     model=BaselineLM(vocab_size)
     batch_x, batch_y = next(iter(dataloader))
+    print(batch_x.shape)
+    print(batch_y.shape)
+
+    print(batch_x[0][:10])
+    print(batch_y[0][:10])
 
     logits = model(batch_x)
 
