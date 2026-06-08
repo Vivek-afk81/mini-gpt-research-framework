@@ -18,13 +18,10 @@ def main():
     tokenizer=GPT2Tokenizer()
 
     #encode text
-    # token_ids=[]
 
     token_ids=tokenizer.encode(raw_text)
     print("Total tokens: ",len(token_ids))
-    # print("Encoded: ",token_ids[:100])
-    # decoded=tokenizer.decode(token_ids)
-    # print("Decoded: ",decoded[:100])
+
 
     #creating dataset
     dataset=GPTDatasetV1(token_ids,max_length=64,stride=64)
@@ -39,6 +36,7 @@ def main():
 
     vocab_size=tokenizer.tokenizer.n_vocab
     model=BaselineLM(vocab_size)
+    
     optimizer=torch.optim.AdamW(
         model.parameters(),
         lr=1e-3
