@@ -4,7 +4,6 @@ import torch.nn as nn
 class MultiHeadCausalAttention(nn.Module):
     def __init__(self,d_model,num_heads,context_length,dropout=0.1):
         super().__init__()
-
         assert d_model%num_heads==0
 
         self.num_heads=num_heads
@@ -44,12 +43,9 @@ class MultiHeadCausalAttention(nn.Module):
 
 
         context=weights@V
-
         context=context.transpose(1,2).contiguous().view(B,T,C)
 
-
         output=self.out_proj(context)
-
 
         #inspecting the weights
 
