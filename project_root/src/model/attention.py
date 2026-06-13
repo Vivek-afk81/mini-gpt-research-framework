@@ -16,7 +16,6 @@ class CausalSelfAttention(nn.Module):
         self.register_buffer("mask",mask)
 
     def forward(self,x):
-
         B,T,C=x.shape
         Q=self.W_q(x)
         K=self.W_k(x)
@@ -28,7 +27,6 @@ class CausalSelfAttention(nn.Module):
         scores=scores.masked_fill(self.mask[:T,:T]==0,float("-inf"))
         weights=torch.softmax(scores,dim=-1)
         weights=self.dropout(weights)
-
         context=weights @ V
 
         return context
