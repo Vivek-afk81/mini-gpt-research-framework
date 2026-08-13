@@ -21,18 +21,18 @@ Every component — tokenization pipeline, dataset construction, attention mecha
 ## Project Structure
 
 ```
-project_root/
+ProjectX/
 ├── main.py                         # Training entry point
 ├── data/
 │   └── The Call of the Wild.txt    # Training corpus (Jack London, public domain)
 ├── src/
 │   ├── tokenizer.py                # GPT-2 BPE tokenizer wrapper
-│   ├── data_loader.py              # Sliding-window dataset and text loading
+│   ├── dataset.py                  # Sliding-window dataset and text loading
 │   └── model/
 │       ├── attention.py            # Single-head causal self-attention
 │       ├── multihead_attention.py  # Multi-head causal self-attention
 │       ├── transformer_block.py    # Attention + residual + LayerNorm
-│       └── baseline_lm.py         # Full language model (embeddings → transformer → LM head)
+│       └── gpt.py                  # Full language model (embeddings → transformer → LM head)
 └── notebooks/
     └── data_preprocessing_pipeline_llm.ipynb
 ```
@@ -44,8 +44,6 @@ project_root/
 - tiktoken
 
 ## Usage
-
-From the `project_root/` directory:
 
 ```bash
 python main.py

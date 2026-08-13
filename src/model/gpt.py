@@ -4,7 +4,7 @@ import torch.nn as nn
 from src.model.transformer_block import TransformerBlock
 
 
-class BaselineLM(nn.Module):
+class GPT(nn.Module):
     def __init__(self, vocab_size, d_model=128, context_length=64, num_heads=4):
         super().__init__()
 

@@ -2,10 +2,9 @@ import torch
 from torch.utils.data import DataLoader
 import torch.nn.functional as F
 
-from src.data_loader import load_raw_text, GPTDatasetV1
+from src.dataset import load_raw_text, GPTDatasetV1
 from src.tokenizer import GPT2Tokenizer
-from src.model.baseline_lm import BaselineLM
-from src.model.attention import CausalSelfAttention
+from src.model.gpt import GPT
 
 def main():
     # load raw text
@@ -35,7 +34,7 @@ def main():
 
 
     vocab_size=tokenizer.tokenizer.n_vocab
-    model=BaselineLM(vocab_size)
+    model=GPT(vocab_size)
     
     optimizer=torch.optim.AdamW(
         model.parameters(),
