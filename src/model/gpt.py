@@ -5,7 +5,7 @@ from src.model.transformer_block import TransformerBlock
 
 
 class GPT(nn.Module):
-    def __init__(self, vocab_size, d_model=128, context_length=64, num_heads=4):
+    def __init__(self, vocab_size, d_model=128, context_length=128, num_heads=4):
         super().__init__()
 
         self.token_emb = nn.Embedding(vocab_size, d_model)
