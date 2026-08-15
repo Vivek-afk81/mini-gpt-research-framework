@@ -24,7 +24,9 @@ Every component — tokenization pipeline, dataset construction, attention mecha
 ProjectX/
 ├── main.py                         # Training entry point
 ├── data/
-│   └── The Call of the Wild.txt    # Training corpus (Jack London, public domain)
+│   ├── The Call of the Wild.txt    # Jack London (public domain)
+│   ├── The Man Who Was Thursday.txt # G.K. Chesterton (public domain)
+│   └── The Odyssey.txt             # Homer, transl. Samuel Butler (public domain)
 ├── src/
 │   ├── tokenizer.py                # GPT-2 BPE tokenizer wrapper
 │   ├── dataset.py                  # Sliding-window dataset and text loading
@@ -49,7 +51,7 @@ ProjectX/
 python main.py
 ```
 
-This tokenizes the training corpus, constructs next-token-prediction sequences, and trains the model for 3 epochs, printing the average cross-entropy loss per epoch.
+This concatenates all `.txt` files in `data/`, tokenizes the combined corpus, constructs next-token-prediction sequences, and trains the model for 3 epochs, printing the average cross-entropy loss per epoch.
 
 ## References
 
