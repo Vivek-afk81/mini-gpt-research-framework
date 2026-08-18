@@ -43,7 +43,7 @@ def main():
 
     #TRAINING LOOP
 
-    num_epochs=3
+    num_epochs=5
     for epoch in range(num_epochs):
         total_loss=0
 
