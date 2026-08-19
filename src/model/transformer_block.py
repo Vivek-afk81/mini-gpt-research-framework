@@ -15,7 +15,7 @@ class TransformerBlock(nn.Module):
         self.ln1=nn.LayerNorm(d_model)
 
         # feed forward network
-        self.ffn=nn.sequential(
+        self.ffn=nn.Sequential(
             nn.Linear(d_model,4*d_model),
             nn.GELU(),
             nn.Linear(4*d_model,d_model),
@@ -24,10 +24,14 @@ class TransformerBlock(nn.Module):
 
         self.ln2=nn.LayerNorm(d_model)
     
-    def forward(self,x):
+    def forward(self,x,return_weights=False):
         #x (B,T,d_model)
 
-        attn_out=self.attn(x)
+        if return_weights:
+            attn_out,weights=self.attn(x,return_weights=True)
+        else:
+            attn_out=self.attn(x)
+            weights=None
 
         #residual connection
 
@@ -45,4 +49,6 @@ class TransformerBlock(nn.Module):
         #layerNorm
         x=self.ln2(x)
 
+        if return_weights:
+            return x,weights
         return x
