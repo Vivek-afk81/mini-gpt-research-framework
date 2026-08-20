@@ -33,3 +33,13 @@ class GPTDatasetV1(Dataset):
     
 ##A map-style dataset is one that implements the _getitem_() and len_() protocols, and represents a map from
 #(possibly non-integral) indices/keys to data samples.
+
+
+def create_datasets(token_ids, max_length=128, stride=128, test_ratio=0.1):
+    """Split token_ids into train/test and return two GPTDatasetV1 instances."""
+    split = int(len(token_ids) * (1 - test_ratio))
+    train_ids = token_ids[:split]
+    test_ids = token_ids[split:]
+    train_dataset = GPTDatasetV1(train_ids, max_length=max_length, stride=stride)
+    test_dataset = GPTDatasetV1(test_ids, max_length=max_length, stride=stride)
+    return train_dataset, test_dataset

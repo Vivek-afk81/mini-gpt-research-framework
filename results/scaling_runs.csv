@@ -1,0 +1,2 @@
+name,d_model,num_layers,num_heads,params,train_loss,test_loss,epochs,time_seconds
+xs,64,2,2,3324224,6.2214,7.0942,10,1931.5

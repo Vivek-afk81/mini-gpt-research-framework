@@ -1,0 +1,13 @@
+# Model configuration — Extra Extra Large
+# ~10M parameters
+
+model:
+  d_model: 512
+  num_layers: 8
+  num_heads: 8
+  context_length: 128
+
+training:
+  batch_size: 4
+  lr: 1e-4
+  epochs: 10
