@@ -1,0 +1,18 @@
+{"id": 1, "category": "assignment_query", "input": "sir kal assignment submit karna hai kya", "output": "Sir, do we need to submit the assignment tomorrow?", "tone": "formal"}
+{"id": 116, "category": "complaint_request", "input": "maam lab me safety equipment nahi hai", "output": "Ma'am, there is no safety equipment in the lab.", "tone": "formal"}
+{"id": 106, "category": "complaint_request", "input": "maam classroom me projector kaam nahi kar raha", "output": "Ma'am, the projector in the classroom is not working.", "tone": "formal"}
+{"id": 58, "category": "leave_request", "input": "maam train late ho gayi thi isliye class miss ho gayi", "output": "Ma'am, my train was delayed and I could not make it to class on time.", "tone": "formal"}
+{"id": 114, "category": "complaint_request", "input": "maam drinking water ka filter kharab hai building me", "output": "Ma'am, the water filter in the building is not working.", "tone": "formal"}
+{"id": 54, "category": "leave_request", "input": "maam accident ho gaya tha isliye ek hafte se nahi aa paya", "output": "Ma'am, I was involved in an accident and could not attend classes for a week.", "tone": "formal"}
+{"id": 108, "category": "complaint_request", "input": "maam washroom ki cleaning nahi ho rahi regularly", "output": "Ma'am, the washrooms are not being cleaned regularly.", "tone": "formal"}
+{"id": 90, "category": "deadline_extension", "input": "maam medical emergency thi hospital me tha deadline miss ho gayi", "output": "Ma'am, I had a medical emergency and was hospitalized. I missed the deadline.", "tone": "formal"}
+{"id": 84, "category": "deadline_extension", "input": "maam internet problem ki wajah se upload nahi ho paya", "output": "Ma'am, I was unable to upload the assignment due to internet connectivity issues.", "tone": "formal"}
+{"id": 92, "category": "deadline_extension", "input": "maam college fest ki preparation ki wajah se time nahi mila", "output": "Ma'am, I was occupied with college fest preparations and could not complete the assignment on time.", "tone": "formal"}
+{"id": 26, "category": "attendance_request", "input": "maam proxy attendance ki wajah se problem ho gayi hai", "output": "Ma'am, I am facing an issue due to a discrepancy in my attendance record.", "tone": "formal"}
+{"id": 72, "category": "examination_query", "input": "maam online exam me technical issue aaya toh kya hoga", "output": "Ma'am, what should we do if a technical issue occurs during the online exam?", "tone": "formal"}
+{"id": 103, "category": "complaint_request", "input": "sir hostel me water supply nahi aa rahi hai", "output": "Sir, the water supply in the hostel has been disrupted. Could you please look into this?", "tone": "formal"}
+{"id": 78, "category": "examination_query", "input": "maam backlog exam kab conduct hoga", "output": "Ma'am, when will the backlog examination be conducted?", "tone": "formal"}
+{"id": 65, "category": "examination_query", "input": "sir supplementary exam kab hoga", "output": "Sir, when is the supplementary examination scheduled?", "tone": "formal"}
+{"id": 30, "category": "attendance_request", "input": "maam semester ki overall attendance kitni chahiye", "output": "Ma'am, what is the minimum overall attendance required for the semester?", "tone": "formal"}
+{"id": 28, "category": "attendance_request", "input": "maam biometric machine me meri attendance nahi lag rahi", "output": "Ma'am, the biometric machine is not recording my attendance. Could you please assist?", "tone": "formal"}
+{"id": 107, "category": "complaint_request", "input": "sir parking me jagah nahi milti", "output": "Sir, there is no parking space available on campus.", "tone": "formal"}

@@ -1,8 +1,8 @@
-# CampusMix
+# LexiFlow
 
 > A Transformer-Based Assistant for Formalizing Code-Mixed Student Communication
 
-CampusMix converts informal Romanized Hinglish messages into clear, polite, formal English — purpose-built for student-to-professor and student-to-administration communication.
+LexiFlow converts informal Romanized Hinglish messages into clear, polite, formal English — purpose-built for student-to-professor and student-to-administration communication.
 
 ```
 Input:  sir kal assignment submit karna hai kya
@@ -22,11 +22,11 @@ sir ghar me emergency ki wajah se assignment complete nahi hua
 
 This is natural in informal settings, but not always appropriate for emails to professors, formal requests, leave applications, or administrative complaints. Existing translation tools fail to preserve student intent, politeness, or campus-specific context.
 
-CampusMix addresses this by generating formal English versions that preserve the original meaning.
+LexiFlow addresses this by generating formal English versions that preserve the original meaning.
 
 ## Architecture
 
-CampusMix uses a **decoder-only causal Transformer** (GPT-style), trained from scratch on a domain-specific Hinglish → Formal English dataset.
+LexiFlow uses a **decoder-only causal Transformer** (GPT-style), trained from scratch on a domain-specific Hinglish → Formal English dataset.
 
 ```
 Tokenizer:        GPT-2 BPE (tiktoken)
@@ -74,7 +74,7 @@ Formal English output
 ## Project Structure
 
 ```
-CampusMix/
+LexiFlow/
 ├── README.md
 ├── requirements.txt
 ├── train.py                        # Training entry point
@@ -169,7 +169,7 @@ python train.py --epochs 5 --batch-size 8
 
 ```python
 !git clone <REPO_URL>
-%cd CampusMix
+%cd LexiFlow
 !pip install -r requirements.txt
 !python train.py --epochs 20 --batch-size 16
 ```
