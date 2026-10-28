@@ -9,6 +9,7 @@ Usage:
 """
 
 import argparse
+import inspect
 import json
 import os
 import sys
@@ -46,7 +47,10 @@ def train_qlora(
         print(f"GPU: {torch.cuda.get_device_name(0)}")
         print(f"VRAM: {torch.cuda.get_device_properties(0).total_mem / 1e9:.1f} GB")
     else:
-        print("WARNING: No GPU detected. QLoRA training requires a GPU.")
+        raise RuntimeError(
+            "No GPU detected. QLoRA training with 4-bit bitsandbytes requires CUDA "
+            "(recommended: Google Colab T4 runtime)."
+        )
 
     # ── Load data ─────────────────────────────────────────────────────
     print(f"\nLoading data from {data_path} ...")
@@ -56,6 +60,8 @@ def train_qlora(
             if line.strip():
                 examples.append(json.loads(line))
 
+    if not examples:
+        raise ValueError(f"No training examples found in: {data_path}")
     print(f"Training examples: {len(examples)}")
 
     # ── Load tokenizer ────────────────────────────────────────────────
@@ -94,6 +100,7 @@ def train_qlora(
         torch_dtype=torch.float16,
     )
     model = prepare_model_for_kbit_training(model)
+    model.config.use_cache = False
 
     # ── LoRA configuration ────────────────────────────────────────────
     lora_config = LoraConfig(
@@ -124,20 +131,36 @@ def train_qlora(
         save_strategy="epoch",
         save_total_limit=2,
         fp16=True,
+        bf16=False,
         optim="paged_adamw_8bit",
         lr_scheduler_type="cosine",
         report_to="none",
         max_grad_norm=1.0,
+        gradient_checkpointing=True,
     )
 
     # ── Trainer ───────────────────────────────────────────────────────
-    trainer = SFTTrainer(
-        model=model,
-        train_dataset=dataset,
-        tokenizer=tokenizer,
-        args=training_args,
-        max_seq_length=max_length,
-    )
+    trainer_kwargs = {
+        "model": model,
+        "train_dataset": dataset,
+        "args": training_args,
+    }
+    trainer_signature = inspect.signature(SFTTrainer.__init__).parameters
+
+    # TRL API compatibility across common versions
+    if "tokenizer" in trainer_signature:
+        trainer_kwargs["tokenizer"] = tokenizer
+    elif "processing_class" in trainer_signature:
+        trainer_kwargs["processing_class"] = tokenizer
+
+    if "dataset_text_field" in trainer_signature:
+        trainer_kwargs["dataset_text_field"] = "text"
+    if "max_seq_length" in trainer_signature:
+        trainer_kwargs["max_seq_length"] = max_length
+    if "packing" in trainer_signature:
+        trainer_kwargs["packing"] = False
+
+    trainer = SFTTrainer(**trainer_kwargs)
 
     print(f"\n{'=' * 60}")
     print(f"  QLoRA Fine-tuning: {base_model}")
@@ -149,6 +172,7 @@ def train_qlora(
     trainer.train()
 
     # ── Save adapter ──────────────────────────────────────────────────
+    os.makedirs(output_dir, exist_ok=True)
     model.save_pretrained(output_dir)
     tokenizer.save_pretrained(output_dir)
     print(f"\nAdapter saved to {output_dir}")
@@ -162,7 +186,8 @@ def train_qlora(
     test_input = tokenizer.apply_chat_template(
         test_messages, tokenize=False, add_generation_prompt=True,
     )
-    inputs = tokenizer(test_input, return_tensors="pt").to(model.device)
+    model_device = next(model.parameters()).device
+    inputs = tokenizer(test_input, return_tensors="pt").to(model_device)
 
     with torch.no_grad():
         output = model.generate(**inputs, max_new_tokens=100, temperature=0.7, do_sample=True)
