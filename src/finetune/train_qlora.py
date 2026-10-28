@@ -44,8 +44,10 @@ def train_qlora(
     # ── Check GPU ─────────────────────────────────────────────────────
     device = "cuda" if torch.cuda.is_available() else "cpu"
     if device == "cuda":
+        props = torch.cuda.get_device_properties(0)
+        vram = getattr(props, "total_memory", getattr(props, "total_mem", 0)) / 1e9
         print(f"GPU: {torch.cuda.get_device_name(0)}")
-        print(f"VRAM: {torch.cuda.get_device_properties(0).total_mem / 1e9:.1f} GB")
+        print(f"VRAM: {vram:.1f} GB")
     else:
         raise RuntimeError(
             "No GPU detected. QLoRA training with 4-bit bitsandbytes requires CUDA "
@@ -81,7 +83,8 @@ def train_qlora(
         return {"text": text}
 
     dataset = Dataset.from_list(examples)
-    dataset = dataset.map(format_example)
+    # Remove original 'messages' column so SFTTrainer uses pre-formatted 'text' directly
+    dataset = dataset.map(format_example, remove_columns=dataset.column_names)
     print(f"Sample:\n{dataset[0]['text'][:300]}...\n")
 
     # ── Load model with 4-bit quantization ────────────────────────────
@@ -99,7 +102,18 @@ def train_qlora(
         device_map="auto",
         torch_dtype=torch.float16,
     )
-    model = prepare_model_for_kbit_training(model)
+
+    # Crucial for T4 GPUs (Compute Capability 7.5):
+    # Force model config to float16 so PEFT and TRL never fall back to Qwen's native bfloat16
+    model.config.torch_dtype = torch.float16
+    if hasattr(model.config, "dtype"):
+        model.config.dtype = torch.float16
+
+    model = prepare_model_for_kbit_training(
+        model,
+        use_gradient_checkpointing=True,
+        gradient_checkpointing_kwargs={"use_reentrant": False},
+    )
     model.config.use_cache = False
 
     # ── LoRA configuration ────────────────────────────────────────────
@@ -107,19 +121,46 @@ def train_qlora(
         r=lora_r,
         lora_alpha=lora_alpha,
         lora_dropout=lora_dropout,
-        target_modules=["q_proj", "k_proj", "v_proj", "o_proj",
-                         "gate_proj", "up_proj", "down_proj"],
+        target_modules=[
+            "q_proj",
+            "k_proj",
+            "v_proj",
+            "o_proj",
+            "gate_proj",
+            "up_proj",
+            "down_proj",
+        ],
         bias="none",
         task_type="CAUSAL_LM",
     )
 
     model = get_peft_model(model, lora_config)
+
+    # Cast any leftover bfloat16 parameters or buffers (e.g., lm_head, norms) to float16
+    for param in model.parameters():
+        if param.dtype == torch.bfloat16:
+            param.data = param.data.to(torch.float16)
+    for buf in model.buffers():
+        if buf.dtype == torch.bfloat16:
+            buf.data = buf.data.to(torch.float16)
+
     trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
     total = sum(p.numel() for p in model.parameters())
-    print(f"\nTrainable parameters: {trainable:,} / {total:,} ({100 * trainable / total:.2f}%)")
+    print(
+        f"\nTrainable parameters: {trainable:,} / {total:,} ({100 * trainable / total:.2f}%)"
+    )
 
     # ── Training arguments ────────────────────────────────────────────
-    training_args = TrainingArguments(
+    try:
+        from trl import SFTConfig
+
+        sft_config_params = inspect.signature(SFTConfig.__init__).parameters
+        ConfigClass = SFTConfig
+    except ImportError:
+        sft_config_params = {}
+        ConfigClass = TrainingArguments
+
+    config_kwargs = dict(
         output_dir=output_dir,
         num_train_epochs=epochs,
         per_device_train_batch_size=batch_size,
@@ -137,7 +178,22 @@ def train_qlora(
         report_to="none",
         max_grad_norm=1.0,
         gradient_checkpointing=True,
+        gradient_checkpointing_kwargs={"use_reentrant": False},
     )
+
+    if ConfigClass is not TrainingArguments:
+        if "dataset_text_field" in sft_config_params:
+            config_kwargs["dataset_text_field"] = "text"
+        if "max_seq_length" in sft_config_params:
+            config_kwargs["max_seq_length"] = max_length
+        elif "max_length" in sft_config_params:
+            config_kwargs["max_length"] = max_length
+        if "packing" in sft_config_params:
+            config_kwargs["packing"] = False
+        if "use_liger_kernel" in sft_config_params:
+            config_kwargs["use_liger_kernel"] = False
+
+    training_args = ConfigClass(**config_kwargs)
 
     # ── Trainer ───────────────────────────────────────────────────────
     trainer_kwargs = {
@@ -147,20 +203,30 @@ def train_qlora(
     }
     trainer_signature = inspect.signature(SFTTrainer.__init__).parameters
 
-    # TRL API compatibility across common versions
     if "tokenizer" in trainer_signature:
         trainer_kwargs["tokenizer"] = tokenizer
     elif "processing_class" in trainer_signature:
         trainer_kwargs["processing_class"] = tokenizer
 
-    if "dataset_text_field" in trainer_signature:
+    if (
+        "dataset_text_field" in trainer_signature
+        and "dataset_text_field" not in config_kwargs
+    ):
         trainer_kwargs["dataset_text_field"] = "text"
-    if "max_seq_length" in trainer_signature:
+    if (
+        "max_seq_length" in trainer_signature
+        and "max_seq_length" not in config_kwargs
+        and "max_length" not in config_kwargs
+    ):
         trainer_kwargs["max_seq_length"] = max_length
-    if "packing" in trainer_signature:
+    if "packing" in trainer_signature and "packing" not in config_kwargs:
         trainer_kwargs["packing"] = False
 
     trainer = SFTTrainer(**trainer_kwargs)
+
+    # Disable TRL's custom chunked_logprob kernel if present (unsupported on T4 with fp16/bf16 mix)
+    if hasattr(trainer, "_use_chunked_ce"):
+        trainer._use_chunked_ce = False
 
     print(f"\n{'=' * 60}")
     print(f"  QLoRA Fine-tuning: {base_model}")
@@ -179,21 +245,38 @@ def train_qlora(
 
     # ── Quick test ────────────────────────────────────────────────────
     print("\n--- Quick Test ---")
+    model.config.use_cache = True
     test_messages = [
-        {"role": "system", "content": "You are LexiFlow, a campus assistant. Help the student."},
-        {"role": "user", "content": "sir meri attendance short ho gayi hai kya karu"},
+        {
+            "role": "system",
+            "content": "You are LexiFlow, a campus assistant. Help the student.",
+        },
+        {
+            "role": "user",
+            "content": "sir meri attendance short ho gayi hai kya karu",
+        },
     ]
     test_input = tokenizer.apply_chat_template(
-        test_messages, tokenize=False, add_generation_prompt=True,
+        test_messages,
+        tokenize=False,
+        add_generation_prompt=True,
     )
     model_device = next(model.parameters()).device
     inputs = tokenizer(test_input, return_tensors="pt").to(model_device)
 
     with torch.no_grad():
-        output = model.generate(**inputs, max_new_tokens=100, temperature=0.7, do_sample=True)
+        output = model.generate(
+            **inputs,
+            max_new_tokens=100,
+            temperature=0.7,
+            do_sample=True,
+        )
 
-    response = tokenizer.decode(output[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True)
-    print(f"Input: sir meri attendance short ho gayi hai kya karu")
+    response = tokenizer.decode(
+        output[0][inputs["input_ids"].shape[1] :],
+        skip_special_tokens=True,
+    )
+    print("Input: sir meri attendance short ho gayi hai kya karu")
     print(f"Output: {response}")
 
 
