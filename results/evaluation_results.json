@@ -1,0 +1,714 @@
+{
+  "checkpoint": "checkpoints/best_model.pt",
+  "val_loss": 4.35589239974616,
+  "val_perplexity": 77.93634468690445,
+  "test_loss": 4.3935952488380146,
+  "test_perplexity": 80.93086314979249,
+  "overall": {
+    "evaluated_samples": 36,
+    "empty_output_rate_pct": 0.0,
+    "repetition_rate_pct": 0.0,
+    "average_formality": 0.639,
+    "average_meaning_overlap": 0.525
+  },
+  "per_category": {
+    "assignment_query": {
+      "count": 7,
+      "empty_rate_pct": 0.0,
+      "repetition_rate_pct": 0.0,
+      "avg_formality": 0.714,
+      "avg_meaning_overlap": 0.487
+    },
+    "attendance_request": {
+      "count": 6,
+      "empty_rate_pct": 0.0,
+      "repetition_rate_pct": 0.0,
+      "avg_formality": 0.5,
+      "avg_meaning_overlap": 0.608
+    },
+    "complaint_request": {
+      "count": 9,
+      "empty_rate_pct": 0.0,
+      "repetition_rate_pct": 0.0,
+      "avg_formality": 0.611,
+      "avg_meaning_overlap": 0.442
+    },
+    "deadline_extension": {
+      "count": 6,
+      "empty_rate_pct": 0.0,
+      "repetition_rate_pct": 0.0,
+      "avg_formality": 0.667,
+      "avg_meaning_overlap": 0.646
+    },
+    "examination_query": {
+      "count": 5,
+      "empty_rate_pct": 0.0,
+      "repetition_rate_pct": 0.0,
+      "avg_formality": 0.7,
+      "avg_meaning_overlap": 0.45
+    },
+    "leave_request": {
+      "count": 3,
+      "empty_rate_pct": 0.0,
+      "repetition_rate_pct": 0.0,
+      "avg_formality": 0.667,
+      "avg_meaning_overlap": 0.583
+    }
+  },
+  "samples": [
+    {
+      "id": 118,
+      "category": "complaint_request",
+      "input": "maam college website pe results update nahi hue hain",
+      "reference": "Ma'am, the results have not been updated on the college website.",
+      "generated": "Ma'am, I a on the be?",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 21,
+        "word_count": 7,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 0.5,
+        "meaning_overlap": 0.5714285714285714,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 5,
+      "category": "assignment_query",
+      "input": "sir kya hum group me assignment kar sakte hain",
+      "reference": "Sir, are we allowed to work on the assignment in groups?",
+      "generated": "Sir, is a, I could you please in the assignment?",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 48,
+        "word_count": 10,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 1.0,
+        "meaning_overlap": 0.5,
+        "preserved_keywords": [
+          "assignment"
+        ]
+      }
+    },
+    {
+      "id": 55,
+      "category": "leave_request",
+      "input": "sir sister ki graduation ceremony hai leave chahiye",
+      "reference": "Sir, my sister's graduation ceremony is coming up. May I please have leave?",
+      "generated": "Sir, I need to",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 14,
+        "word_count": 4,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 0.5,
+        "meaning_overlap": 0.5,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 76,
+      "category": "examination_query",
+      "input": "maam exam ke time extra sheets milti hain kya",
+      "reference": "Ma'am, are extra answer sheets available during the exam?",
+      "generated": "Ma'am, I would like to a not assignment?",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 40,
+        "word_count": 9,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 0.5,
+        "meaning_overlap": 0.25,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 12,
+      "category": "assignment_query",
+      "input": "maam assignment me plagiarism kitna allow hai",
+      "reference": "Ma'am, what is the allowed plagiarism percentage for the assignment?",
+      "generated": "Ma'am, I have a?",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 16,
+        "word_count": 5,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 0.5,
+        "meaning_overlap": 0.4,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 70,
+      "category": "examination_query",
+      "input": "maam exam form bharne ki last date kya hai",
+      "reference": "Ma'am, what is the last date to fill the examination form?",
+      "generated": "Ma'am, I a a the.",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 17,
+        "word_count": 6,
+        "distinct_1": 0.8333333333333334,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 0.5,
+        "meaning_overlap": 0.5,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 112,
+      "category": "complaint_request",
+      "input": "maam library ki timing extend karni chahiye exam ke time",
+      "reference": "Ma'am, the library hours should be extended during the examination period.",
+      "generated": "Ma'am, I like to a be?",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 22,
+        "word_count": 7,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 0.5,
+        "meaning_overlap": 0.42857142857142855,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 87,
+      "category": "deadline_extension",
+      "input": "sir laptop kharab ho gaya tha data recover karna pada",
+      "reference": "Sir, my laptop malfunctioned and I had to recover the data. Could you extend the deadline?",
+      "generated": "Sir, I have the.",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 16,
+        "word_count": 4,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 0.5,
+        "meaning_overlap": 0.75,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 14,
+      "category": "assignment_query",
+      "input": "maam previous year ka assignment sample mil sakta hai kya",
+      "reference": "Ma'am, would it be possible to get a sample of last year's assignment?",
+      "generated": "Ma'am, I.",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 9,
+        "word_count": 3,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 0.5,
+        "meaning_overlap": 0.6666666666666666,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 117,
+      "category": "complaint_request",
+      "input": "sir classroom me fan bahut slow chal rahe hain",
+      "reference": "Sir, the fans in the classroom are running very slowly.",
+      "generated": "Sir, I need to.",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 15,
+        "word_count": 4,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 0.5,
+        "meaning_overlap": 0.25,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 18,
+      "category": "assignment_query",
+      "input": "maam group assignment me kitne members hone chahiye",
+      "reference": "Ma'am, how many members should there be in a group assignment?",
+      "generated": "Ma'am, the in the assignment Sir, I would like to a not?",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 56,
+        "word_count": 13,
+        "distinct_1": 0.9230769230769231,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 1.0,
+        "meaning_overlap": 0.625,
+        "preserved_keywords": [
+          "assignment"
+        ]
+      }
+    },
+    {
+      "id": 29,
+      "category": "attendance_request",
+      "input": "sir medical leave ki wajah se attendance kam ho gayi",
+      "reference": "Sir, my attendance has dropped due to medical leave. Could you please consider this?",
+      "generated": "Sir, I for the.",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 15,
+        "word_count": 4,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 0.5,
+        "meaning_overlap": 0.25,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 32,
+      "category": "attendance_request",
+      "input": "maam meri attendance update nahi hui hai portal pe",
+      "reference": "Ma'am, my attendance has not been updated on the portal. Could you please verify?",
+      "generated": "Ma'am, the assignment?",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 22,
+        "word_count": 4,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 0.5,
+        "meaning_overlap": 0.75,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 36,
+      "category": "attendance_request",
+      "input": "maam meri attendance record me galti hai please check kijiye",
+      "reference": "Ma'am, there appears to be an error in my attendance record. Could you please review it?",
+      "generated": "Ma'am, I would like to a is a the assignment?",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 45,
+        "word_count": 11,
+        "distinct_1": 0.9090909090909091,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 0.5,
+        "meaning_overlap": 0.375,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 95,
+      "category": "deadline_extension",
+      "input": "sir exam preparation aur assignment dono sath me manage nahi ho raha",
+      "reference": "Sir, I am finding it difficult to manage exam preparation and the assignment simultaneously. May I have an extension?",
+      "generated": "Sir,?",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 5,
+        "word_count": 1,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 0.5,
+        "meaning_overlap": 1.0,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 4,
+      "category": "assignment_query",
+      "input": "maam mujhe assignment topic samajh nahi aaya",
+      "reference": "Ma'am, I was unable to understand the assignment topic. Could you please explain it again?",
+      "generated": "Ma'am, I would like to the.",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 27,
+        "word_count": 7,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 0.5,
+        "meaning_overlap": 0.7142857142857143,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 15,
+      "category": "assignment_query",
+      "input": "sir kya assignment email pe submit kar sakte hain",
+      "reference": "Sir, can we submit the assignment via email?",
+      "generated": "Sir, I have a?",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 14,
+        "word_count": 4,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 0.5,
+        "meaning_overlap": 0.25,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 82,
+      "category": "deadline_extension",
+      "input": "maam health issues ki wajah se project complete nahi hua",
+      "reference": "Ma'am, I could not complete the project due to health issues. May I have an extension?",
+      "generated": "Ma'am, my the the exam in I could?",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 34,
+        "word_count": 9,
+        "distinct_1": 0.8888888888888888,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 0.5,
+        "meaning_overlap": 0.625,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 1,
+      "category": "assignment_query",
+      "input": "sir kal assignment submit karna hai kya",
+      "reference": "Sir, do we need to submit the assignment tomorrow?",
+      "generated": "Sir, I please a.",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 16,
+        "word_count": 4,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 1.0,
+        "meaning_overlap": 0.25,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 116,
+      "category": "complaint_request",
+      "input": "maam lab me safety equipment nahi hai",
+      "reference": "Ma'am, there is no safety equipment in the lab.",
+      "generated": "Ma'am, I need to for the my",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 27,
+        "word_count": 8,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 0.5,
+        "meaning_overlap": 0.375,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 106,
+      "category": "complaint_request",
+      "input": "maam classroom me projector kaam nahi kar raha",
+      "reference": "Ma'am, the projector in the classroom is not working.",
+      "generated": "Ma'am, I the",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 12,
+        "word_count": 4,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 0.5,
+        "meaning_overlap": 0.75,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 58,
+      "category": "leave_request",
+      "input": "maam train late ho gayi thi isliye class miss ho gayi",
+      "reference": "Ma'am, my train was delayed and I could not make it to class on time.",
+      "generated": "Ma'am, I and the been in the assignment.",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 40,
+        "word_count": 9,
+        "distinct_1": 0.8888888888888888,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 0.5,
+        "meaning_overlap": 0.5,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 114,
+      "category": "complaint_request",
+      "input": "maam drinking water ka filter kharab hai building me",
+      "reference": "Ma'am, the water filter in the building is not working.",
+      "generated": "Ma'am, could not Sir, I have the assignment?",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 44,
+        "word_count": 9,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 1.0,
+        "meaning_overlap": 0.5,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 54,
+      "category": "leave_request",
+      "input": "maam accident ho gaya tha isliye ek hafte se nahi aa paya",
+      "reference": "Ma'am, I was involved in an accident and could not attend classes for a week.",
+      "generated": "Ma'am, I please.",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 16,
+        "word_count": 4,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 1.0,
+        "meaning_overlap": 0.75,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 108,
+      "category": "complaint_request",
+      "input": "maam washroom ki cleaning nahi ho rahi regularly",
+      "reference": "Ma'am, the washrooms are not being cleaned regularly.",
+      "generated": "Ma'am, the the assignment?",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 26,
+        "word_count": 5,
+        "distinct_1": 0.8,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 0.5,
+        "meaning_overlap": 0.6,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 90,
+      "category": "deadline_extension",
+      "input": "maam medical emergency thi hospital me tha deadline miss ho gayi",
+      "reference": "Ma'am, I had a medical emergency and was hospitalized. I missed the deadline.",
+      "generated": "Ma'am, I would like to request a my attendance.",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 47,
+        "word_count": 10,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 1.0,
+        "meaning_overlap": 0.5,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 84,
+      "category": "deadline_extension",
+      "input": "maam internet problem ki wajah se upload nahi ho paya",
+      "reference": "Ma'am, I was unable to upload the assignment due to internet connectivity issues.",
+      "generated": "Ma'am, I would like to request a",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 32,
+        "word_count": 8,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 1.0,
+        "meaning_overlap": 0.5,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 92,
+      "category": "deadline_extension",
+      "input": "maam college fest ki preparation ki wajah se time nahi mila",
+      "reference": "Ma'am, I was occupied with college fest preparations and could not complete the assignment on time.",
+      "generated": "Ma'am, I you for the exam to is attendance",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 42,
+        "word_count": 10,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 0.5,
+        "meaning_overlap": 0.5,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 26,
+      "category": "attendance_request",
+      "input": "maam proxy attendance ki wajah se problem ho gayi hai",
+      "reference": "Ma'am, I am facing an issue due to a discrepancy in my attendance record.",
+      "generated": "Ma'am, I would like to my attendance has a not.",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 47,
+        "word_count": 11,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 0.5,
+        "meaning_overlap": 0.875,
+        "preserved_keywords": [
+          "attendance"
+        ]
+      }
+    },
+    {
+      "id": 72,
+      "category": "examination_query",
+      "input": "maam online exam me technical issue aaya toh kya hoga",
+      "reference": "Ma'am, what should we do if a technical issue occurs during the online exam?",
+      "generated": "Ma'am, would please like to a I have the attendance in has is.",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 62,
+        "word_count": 14,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 1.0,
+        "meaning_overlap": 0.5,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 103,
+      "category": "complaint_request",
+      "input": "sir hostel me water supply nahi aa rahi hai",
+      "reference": "Sir, the water supply in the hostel has been disrupted. Could you please look into this?",
+      "generated": "Sir, I my'am, I please grant a",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 30,
+        "word_count": 8,
+        "distinct_1": 0.875,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 1.0,
+        "meaning_overlap": 0.25,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 78,
+      "category": "examination_query",
+      "input": "maam backlog exam kab conduct hoga",
+      "reference": "Ma'am, when will the backlog examination be conducted?",
+      "generated": "Ma'am, the, could please for",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 28,
+        "word_count": 6,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 1.0,
+        "meaning_overlap": 0.5,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 65,
+      "category": "examination_query",
+      "input": "sir supplementary exam kab hoga",
+      "reference": "Sir, when is the supplementary examination scheduled?",
+      "generated": "Sir, the to it.",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 15,
+        "word_count": 4,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 0.5,
+        "meaning_overlap": 0.5,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 30,
+      "category": "attendance_request",
+      "input": "maam semester ki overall attendance kitni chahiye",
+      "reference": "Ma'am, what is the minimum overall attendance required for the semester?",
+      "generated": "Ma'am, what is a.",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 17,
+        "word_count": 5,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 0.5,
+        "meaning_overlap": 0.8,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 28,
+      "category": "attendance_request",
+      "input": "maam biometric machine me meri attendance nahi lag rahi",
+      "reference": "Ma'am, the biometric machine is not recording my attendance. Could you please assist?",
+      "generated": "Ma'am, is I would.",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 18,
+        "word_count": 5,
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 0.5,
+        "meaning_overlap": 0.6,
+        "preserved_keywords": []
+      }
+    },
+    {
+      "id": 107,
+      "category": "complaint_request",
+      "input": "sir parking me jagah nahi milti",
+      "reference": "Sir, there is no parking space available on campus.",
+      "generated": "Sir, the the assignment?",
+      "metrics": {
+        "is_empty": false,
+        "length_chars": 24,
+        "word_count": 4,
+        "distinct_1": 0.75,
+        "distinct_2": 1.0,
+        "has_word_repetition": false,
+        "formality_score": 0.5,
+        "meaning_overlap": 0.25,
+        "preserved_keywords": []
+      }
+    }
+  ]
+}

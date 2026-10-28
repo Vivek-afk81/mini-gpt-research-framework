@@ -136,8 +136,9 @@ def train(config):
     )
 
     total_steps = len(train_loader) * config.training.epochs
+    warmup = min(config.training.warmup_steps, max(5, int(total_steps * 0.10)))
     scheduler = get_lr_scheduler(
-        optimizer, config.training.warmup_steps, total_steps,
+        optimizer, warmup, total_steps,
     )
 
     # ── Training ──────────────────────────────────────────────────────
@@ -208,8 +209,18 @@ def train(config):
         # ── Checkpoints ──────────────────────────────────────────────
         os.makedirs("checkpoints", exist_ok=True)
 
+        def safe_save(obj, path, retries=3):
+            for attempt in range(retries):
+                try:
+                    torch.save(obj, path)
+                    break
+                except Exception as e:
+                    if attempt == retries - 1:
+                        print(f"Warning: Failed to save {path}: {e}")
+                    time.sleep(0.1)
+
         # Always save latest
-        torch.save({
+        safe_save({
             "model_state_dict": model.state_dict(),
             "optimizer_state_dict": optimizer.state_dict(),
             "epoch": epoch,
@@ -220,7 +231,7 @@ def train(config):
         # Save best
         if val_loss < best_val_loss:
             best_val_loss = val_loss
-            torch.save({
+            safe_save({
                 "model_state_dict": model.state_dict(),
                 "epoch": epoch,
                 "val_loss": val_loss,

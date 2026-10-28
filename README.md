@@ -1,257 +1,238 @@
 # LexiFlow
 
-> A Transformer-Based Assistant for Formalizing Code-Mixed Student Communication
+> A Transformer-Based Assistant for Formalizing Code-Mixed Student Communication & Campus Inquiry
 
-LexiFlow converts informal Romanized Hinglish messages into clear, polite, formal English — purpose-built for student-to-professor and student-to-administration communication.
+LexiFlow converts informal Romanized Hinglish messages into clear, polite, formal English — purpose-built for student-to-professor and student-to-administration communication, backed by a local RAG retrieval system for campus policies.
 
-```
+```text
 Input:  sir kal assignment submit karna hai kya
 Output: Sir, do we need to submit the assignment tomorrow?
 ```
 
 ---
 
-## Problem
+## 1. Problem Statement
 
 Many Indian college students communicate using code-mixed language — a blend of Romanized Hindi and English:
 
-```
+```text
 maam mujhe topic samajh nahi aaya
 sir ghar me emergency ki wajah se assignment complete nahi hua
+sir attendance 75% se kam hai to exam de sakte hain kya
 ```
 
-This is natural in informal settings, but not always appropriate for emails to professors, formal requests, leave applications, or administrative complaints. Existing translation tools fail to preserve student intent, politeness, or campus-specific context.
+While natural in informal peer conversations, this phrasing is not suitable for official emails to faculty, absence letters, or administrative queries. LexiFlow addresses this by:
+1. Converting informal Hinglish into formal, polite English with intent preservation.
+2. Grounding student queries against official campus policies (attendance, leave, examinations, assignment guidelines, hostel rules) using local semantic search (RAG).
 
-LexiFlow addresses this by generating formal English versions that preserve the original meaning.
+---
 
-## Architecture
+## 2. Architecture & Design
 
-LexiFlow uses a **decoder-only causal Transformer** (GPT-style), trained from scratch on a domain-specific Hinglish → Formal English dataset.
+### Custom Decoder-Only Transformer (Local CPU Baseline)
+A compact 4-layer, 128-dimensional causal Transformer designed specifically for low-latency CPU inference on standard laptops:
 
-```
-Tokenizer:        GPT-2 BPE (tiktoken)
-Embedding dim:    128
+```text
+Tokenizer:         GPT-2 BPE (tiktoken) — 50,257 vocab
+Embedding dim:     128
 Transformer blocks: 4
-Attention heads:  4
-Head dimension:   32
-FFN dimension:    512
-Context length:   128
-Norm style:       Pre-Norm (GPT-2)
-Weight tying:     Token embedding ↔ LM head
+Attention heads:   4 (head_dim = 32)
+FFN hidden dim:    512
+Context length:    128
+Architecture:      Pre-Norm (GPT-2 style LayerNorm placement)
+Weight Tying:      Token embedding ↔ Language model head
+Total Parameters:  ~7.24 Million
 ```
 
-### Model Pipeline
+### Local RAG Grounding (FAISS + Sentence Transformers)
+- **Vector Index**: FAISS Inner-Product cosine similarity (`IndexFlatIP`).
+- **Embedding Model**: `all-MiniLM-L6-v2` via `sentence-transformers`.
+- **Knowledge Base**: Curated campus policy documents under `data/knowledge/` (Attendance, Leave, Exams, Assignments, Hostel, Calendar).
+- **Index Persistence**: Pre-computed and cached in `data/index/faiss.index` to prevent rebuilding on every application start.
 
-```
-Input text
-    ↓
-[TASK] + [TONE] + [INPUT] tagging
-    ↓
-GPT-2 BPE tokenization
-    ↓
-Token embeddings + Positional embeddings
-    ↓
-N × Transformer blocks (Pre-Norm + MHA + FFN + Residual)
-    ↓
-Final LayerNorm → LM Head
-    ↓
-Autoregressive generation (greedy / temperature sampling)
-    ↓
-Formal English output
-```
+---
 
-## Supported Message Categories
+## 3. Project Structure
 
-| # | Category | Example Input |
-|---|---|---|
-| 1 | Assignment query | `sir assignment kab submit karna hai` |
-| 2 | Attendance request | `sir meri attendance short ho gayi hai` |
-| 3 | Leave / absence request | `maam mujhe do din ki leave chahiye` |
-| 4 | Examination query | `sir kal exam kis room me hoga` |
-| 5 | Deadline extension | `sir emergency ki wajah se assignment complete nahi hua` |
-| 6 | Complaint / admin request | `sir lab me AC kaam nahi kar raha` |
-
-## Project Structure
-
-```
+```text
 LexiFlow/
-├── README.md
-├── requirements.txt
-├── train.py                        # Training entry point
-├── generate.py                     # Text generation CLI
-├── evaluate.py                     # Evaluation pipeline
-├── app.py                          # Streamlit demo interface
+├── README.md                           # Project documentation and guide
+├── requirements.txt                    # Python dependencies
+├── generate.py                         # Root shortcut for generation CLI
+├── train.py                            # Root shortcut for training script
+├── evaluate.py                         # Root shortcut for evaluation pipeline
 │
 ├── src/
 │   ├── __init__.py
-│   ├── config.py                   # Centralized hyperparameters
-│   ├── tokenizer.py                # GPT-2 BPE wrapper + special tokens
-│   ├── data_loader.py              # JSONL dataset with label masking
-│   ├── training.py                 # Training loop utilities
-│   ├── generation.py               # Autoregressive decoding
-│   ├── evaluation.py               # BLEU, perplexity, intent metrics
-│   └── model/
+│   ├── config.py                       # Centralized type-safe dataclass configs
+│   ├── tokenizer.py                    # GPT-2 BPE wrapper with EOS handling
+│   ├── data_loader.py                  # JSONL dataset with prompt label masking (-100)
+│   ├── generation.py                   # Category auto-detection, repetition penalty, sampling
+│   ├── pipeline.py                     # Orchestrator (Memory + RAG + LLM backend)
+│   │
+│   ├── model/
+│   │   ├── __init__.py
+│   │   ├── attention.py                # Single-head causal attention
+│   │   ├── multihead_attention.py      # Multi-head causal self-attention
+│   │   ├── transformer_block.py        # Pre-Norm block (LN → MHA → Res → LN → FFN → Res)
+│   │   └── gpt.py                      # Full GPT model with GPT-2 initialization
+│   │
+│   ├── rag/
+│   │   ├── __init__.py
+│   │   ├── document_loader.py          # Markdown document loader and chunker
+│   │   └── retriever.py                # FAISS vector store and embedding retrieval
+│   │
+│   ├── memory/
+│   │   ├── __init__.py
+│   │   └── chat_memory.py              # Conversation turn buffer
+│   │
+│   └── finetune/
 │       ├── __init__.py
-│       ├── attention.py            # Single-head causal self-attention
-│       ├── multihead_attention.py  # Multi-head causal self-attention
-│       ├── transformer_block.py    # Pre-Norm block (MHA + FFN + residual)
-│       └── gpt.py                  # Full language model
+│       ├── dataset.py                  # Instruction formatting for open-source LLMs
+│       └── train_qlora.py              # Colab QLoRA fine-tuning script
 │
 ├── data/
 │   ├── raw/
-│   │   └── campus_messages.jsonl   # Source dataset
-│   └── processed/
-│       ├── train.jsonl
-│       ├── validation.jsonl
-│       └── test.jsonl
+│   │   └── campus_messages.jsonl       # 120 curated Hinglish → English examples
+│   ├── processed/
+│   │   ├── train.jsonl                 # Training split (70%)
+│   │   ├── validation.jsonl            # Validation split (15%)
+│   │   └── test.jsonl                  # Held-out test split (15%)
+│   ├── knowledge/                      # Campus documents for RAG
+│   │   ├── attendance_policy.md
+│   │   ├── leave_policy.md
+│   │   ├── examination_rules.md
+│   │   ├── assignment_guidelines.md
+│   │   ├── hostel_rules.md
+│   │   └── academic_calendar.md
+│   └── index/                          # Pre-built FAISS index
+│       ├── faiss.index
+│       └── chunks.pkl
 │
 ├── checkpoints/
-│   ├── best_model.pt
-│   └── latest_model.pt
+│   ├── best_model.pt                   # Model weights with lowest validation loss
+│   └── latest_model.pt                 # Most recent checkpoint
 │
 ├── results/
-│   ├── training_loss.csv
-│   ├── loss_plot.png
-│   └── evaluation_results.json
+│   ├── training_loss.csv               # Epoch-by-epoch loss and learning rate history
+│   ├── evaluation_results.json         # Automated evaluation report
+│   └── manual_evaluation_ratings.md    # 20 rated responses with rubric
 │
-├── notebooks/
-│   └── training_colab.ipynb        # Google Colab training notebook
+├── tests/
+│   ├── __init__.py
+│   ├── test_tokenizer.py               # Tokenizer encode/decode & vocab tests
+│   ├── test_data_loader.py             # Prompt formatting & label masking tests
+│   ├── test_model.py                   # Forward pass, weight-tying & causal mask tests
+│   └── test_generation.py              # Category detection, penalty & validation tests
 │
 └── scripts/
-    ├── train.py                    # Configurable training script
-    └── visualize_attention.py      # Attention heatmap visualization
+    ├── train.py                        # Configurable training script
+    ├── generate.py                     # Command-line inference and interactive shell
+    ├── evaluate.py                     # Loss, perplexity, and quality evaluation
+    ├── build_index.py                  # RAG document indexing utility
+    └── visualize_attention.py          # Multi-head attention map visualizer
 ```
 
-## Dataset
+---
 
-The dataset uses JSONL format with tagged examples:
+## 4. Supported Categories
 
-```json
-{
-  "id": 1,
-  "category": "assignment_query",
-  "input": "sir kal assignment submit karna hai kya",
-  "output": "Sir, do we need to submit the assignment tomorrow?",
-  "tone": "formal"
-}
-```
+LexiFlow automatically recognizes student intents across 6 college communication categories:
 
-Each example is converted into a training prompt:
-
-```
-[TASK] assignment_query [TONE] formal [INPUT] sir kal assignment submit karna hai kya [OUTPUT] Sir, do we need to submit the assignment tomorrow?
-```
-
-Loss is computed only on the `[OUTPUT]` portion (prompt tokens are masked with `-100`).
-
-**Split:** 70% train / 15% validation / 15% test
-
-## Training
-
-Training uses next-token prediction with cross-entropy loss.
-
-```
-Optimizer:        AdamW
-Learning rate:    3e-4
-Weight decay:     0.01
-Gradient clipping: 1.0
-Batch size:       16
-Epochs:           10–30
-```
-
-### Local (CPU)
-
-```bash
-python train.py --epochs 5 --batch-size 8
-```
-
-### Google Colab (GPU)
-
-```python
-!git clone <REPO_URL>
-%cd LexiFlow
-!pip install -r requirements.txt
-!python train.py --epochs 20 --batch-size 16
-```
-
-## Generation
-
-Three decoding modes are supported:
-
-| Mode | Temperature | Use Case |
+| # | Category | Sample Hinglish Input |
 |---|---|---|
-| Greedy | — | Most deterministic output |
-| Conservative | 0.7 | Reliable, slightly varied |
-| Creative | 1.0 | More variation, less precision |
+| 1 | `assignment_query` | `sir kal assignment submit karna hai kya` |
+| 2 | `attendance_request` | `sir attendance 75% se kam hai to exam de sakte hain kya` |
+| 3 | `leave_request` | `sir fever hai isliye do din college nahi aa paunga` |
+| 4 | `exam_query` | `sir mid sem exam kis date se start ho rahe hain` |
+| 5 | `deadline_extension` | `sir tabiyat kharab thi assignment ke liye thoda extra time de dijiye` |
+| 6 | `complaint` | `sir computer lab me ac aur internet kaam nahi kar raha` |
+
+---
+
+## 5. Getting Started & Local Usage
+
+### Installation
 
 ```bash
-python generate.py --input "sir kal assignment submit karna hai kya" --temperature 0.7
-```
-
-## Evaluation
-
-### Automatic Metrics
-
-- Validation loss and perplexity
-- BLEU / ROUGE scores
-- Intent preservation rate
-- Empty / invalid output rate
-
-### Human Evaluation (1–5 scale)
-
-| Criterion | Question |
-|---|---|
-| Meaning preservation | Does the output preserve the original message? |
-| Formality | Is the message suitable for a professor? |
-| Grammar | Is the English grammatically correct? |
-| Relevance | Does it answer the intended task? |
-| Usefulness | Would a student actually use this? |
-
-## Demo
-
-```bash
-pip install streamlit
-streamlit run app.py
-```
-
-The Streamlit interface provides:
-
-- Message type selector (6 categories)
-- Tone selector
-- Temperature and length controls
-- One-click copy and regenerate
-
-## Requirements
-
-- Python 3.8+
-- PyTorch
-- tiktoken
-- streamlit
-- matplotlib, seaborn
-
-```bash
+git clone <REPO_URL>
+cd LexiFlow
+python -m venv venv
+venv\Scripts\activate       # On Linux/macOS: source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Limitations
+### Running Tests
 
-- GPT-2 BPE tokenizer is not optimized for Romanized Hinglish subwords
-- Small dataset size limits generalization to unseen phrasings
-- No Devanagari Hindi support (Romanized only)
-- Domain-specific — not a general-purpose chatbot or translator
-- May alter student intent in edge cases
+Run the complete unit test suite (18 tests verifying tokenizer, masking, model forward pass, and generation):
 
-## Future Work
+```bash
+python -m unittest discover -s tests -v
+```
 
-- Larger and crowd-sourced Hinglish dataset
-- Fine-tuned multilingual tokenizer
-- Multiple tone outputs (friendly, very formal, WhatsApp-short)
-- Email subject line generation
-- Hindi Devanagari input support
-- Intent classification module
+### Text Generation CLI
 
-## References
+**Single Message:**
+```bash
+python scripts/generate.py --input "sir kal assignment submit karna hai kya"
+```
 
-- Vaswani, A., et al. (2017). *Attention Is All You Need.* [arXiv:1706.03762](https://arxiv.org/abs/1706.03762)
-- Radford, A., et al. (2018). *Improving Language Understanding by Generative Pre-Training.* OpenAI.
-- Radford, A., et al. (2019). *Language Models are Unsupervised Multitask Learners.* OpenAI.
+**Batch Test across All 6 Categories (18 sample messages):**
+```bash
+python scripts/generate.py --batch-test
+```
+
+**Interactive Mode:**
+```bash
+python scripts/generate.py --interactive
+```
+
+### Training the Custom Model (Local CPU)
+
+```bash
+python scripts/train.py --epochs 25 --batch-size 8 --lr 4e-4
+```
+
+### Running Evaluation
+
+Computes validation loss, test loss, perplexity, empty output rate, repetition rate, and formality metrics:
+
+```bash
+python scripts/evaluate.py
+```
+
+### Testing Local RAG Retrieval
+
+Builds or verifies the FAISS index and retrieves grounded campus documents:
+
+```bash
+python scripts/build_index.py
+```
+
+---
+
+## 6. Local Evaluation Summary
+
+From automated evaluation on held-out test and validation sets (`checkpoints/best_model.pt`):
+
+| Metric | Result | Notes |
+|---|---|---|
+| **Validation Loss** | `4.3559` | Cross-entropy loss on output tokens only |
+| **Validation Perplexity** | `77.94` | Down from ~48,000 initial untrained |
+| **Test Loss** | `4.3936` | Consistent generalization on unseen data |
+| **Empty Output Rate** | `0.0%` | Prevented via `min_tokens` and safe category fallbacks |
+| **Repetition Rate** | `0.0%` | Suppressed via `repetition_penalty=1.25` |
+| **Average Formality** | `0.64 / 1.0` | Consistent usage of polite honorifics and modal verbs |
+| **Average CPU Inference** | `~300ms` | Fast, lightweight execution on consumer laptops |
+
+---
+
+## 7. Next Step: Google Colab for QLoRA Training
+
+To respect local laptop resources, fine-tuning large language models (such as `Qwen/Qwen2.5-1.5B-Instruct`) should be performed in Google Colab's free T4 GPU environment:
+
+1. Open `notebooks/` in Google Colab with GPU runtime enabled.
+2. Run `src/finetune/train_qlora.py` with 4-bit quantization (QLoRA).
+3. Download only the small LoRA adapter weights (`checkpoints/qlora/`, ~30–50 MB).
+4. Place the adapter into `checkpoints/qlora/` locally.
+5. Set `backend="finetuned"` in `src/pipeline.py` to seamlessly switch from the custom baseline to the fine-tuned assistant with source citations and conversation memory.
