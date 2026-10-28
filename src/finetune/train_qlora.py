@@ -136,9 +136,12 @@ def train_qlora(
 
     model = get_peft_model(model, lora_config)
 
-    # Cast any leftover bfloat16 parameters or buffers (e.g., lm_head, norms) to float16
+    # 1. Trainable parameters MUST be float32 for PyTorch AMP GradScaler (fp16=True)
+    # 2. Frozen non-quantized parameters must be float16 (never bfloat16) for Tesla T4
     for param in model.parameters():
-        if param.dtype == torch.bfloat16:
+        if param.requires_grad:
+            param.data = param.data.to(torch.float32)
+        elif param.dtype == torch.bfloat16:
             param.data = param.data.to(torch.float16)
     for buf in model.buffers():
         if buf.dtype == torch.bfloat16:
@@ -224,7 +227,7 @@ def train_qlora(
 
     trainer = SFTTrainer(**trainer_kwargs)
 
-    # Disable TRL's custom chunked_logprob kernel if present (unsupported on T4 with fp16/bf16 mix)
+    # Disable TRL's custom chunked_logprob kernel if present
     if hasattr(trainer, "_use_chunked_ce"):
         trainer._use_chunked_ce = False
 
@@ -265,12 +268,13 @@ def train_qlora(
     inputs = tokenizer(test_input, return_tensors="pt").to(model_device)
 
     with torch.no_grad():
-        output = model.generate(
-            **inputs,
-            max_new_tokens=100,
-            temperature=0.7,
-            do_sample=True,
-        )
+        with torch.cuda.amp.autocast(dtype=torch.float16):
+            output = model.generate(
+                **inputs,
+                max_new_tokens=100,
+                temperature=0.7,
+                do_sample=True,
+            )
 
     response = tokenizer.decode(
         output[0][inputs["input_ids"].shape[1] :],
