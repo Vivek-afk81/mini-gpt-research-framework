@@ -41,16 +41,52 @@ class LexiFlowPipeline:
         - "finetuned": QLoRA fine-tuned HuggingFace model
     """
 
-    def __init__(self, backend="finetuned", model_name=None, device=None):
+    def __init__(
+        self,
+        backend="finetuned",
+        model_name=None,
+        adapter_path="checkpoints/qlora",
+        device=None,
+    ):
         self.backend = backend
         self.memory = ChatMemory(max_turns=5)
         self.retriever = Retriever()
-        self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = self._resolve_device(device)
 
         # Model components (lazy-loaded)
         self._model = None
         self._tokenizer = None
         self._model_name = model_name
+        self._adapter_path = adapter_path
+
+    def _resolve_device(self, requested_device):
+        """Normalize device request to a valid torch device string."""
+        if requested_device in (None, "auto"):
+            return "cuda" if torch.cuda.is_available() else "cpu"
+        if isinstance(requested_device, str) and requested_device.startswith("cuda"):
+            return requested_device if torch.cuda.is_available() else "cpu"
+        return requested_device
+
+    def _get_model_load_kwargs(self):
+        """Model loading kwargs that are safe for both CUDA + CPU paths."""
+        if str(self.device).startswith("cuda"):
+            return {"torch_dtype": torch.float16, "device_map": "auto"}
+        return {"torch_dtype": torch.float32}
+
+    def _get_input_device(self):
+        """Choose a valid input-tensor device for generated prompts."""
+        if self._model is None:
+            return self.device
+
+        hf_device_map = getattr(self._model, "hf_device_map", None)
+        if isinstance(hf_device_map, dict) and hf_device_map:
+            first = next(iter(hf_device_map.values()))
+            if isinstance(first, int):
+                return f"cuda:{first}"
+            if isinstance(first, str) and first not in {"disk", "meta"}:
+                return first
+
+        return next(self._model.parameters()).device
 
     def load_model(self):
         """Load the appropriate model based on backend setting."""
@@ -65,17 +101,17 @@ class LexiFlowPipeline:
         from peft import PeftModel
 
         base_model_name = self._model_name or "Qwen/Qwen2.5-1.5B-Instruct"
-        adapter_path = "checkpoints/qlora"
+        adapter_path = self._adapter_path
 
         print(f"Loading base model: {base_model_name}")
         self._tokenizer = AutoTokenizer.from_pretrained(base_model_name)
+        model_load_kwargs = self._get_model_load_kwargs()
 
         # Try loading with adapter, fall back to base model
         try:
             base_model = AutoModelForCausalLM.from_pretrained(
                 base_model_name,
-                torch_dtype=torch.float16 if self.device == "cuda" else torch.float32,
-                device_map="auto" if self.device == "cuda" else None,
+                **model_load_kwargs,
             )
             self._model = PeftModel.from_pretrained(base_model, adapter_path)
             print(f"Loaded fine-tuned model with LoRA adapter from {adapter_path}")
@@ -83,11 +119,10 @@ class LexiFlowPipeline:
             print(f"No LoRA adapter found at {adapter_path}. Using base model.")
             self._model = AutoModelForCausalLM.from_pretrained(
                 base_model_name,
-                torch_dtype=torch.float16 if self.device == "cuda" else torch.float32,
-                device_map="auto" if self.device == "cuda" else None,
+                **model_load_kwargs,
             )
 
-        if self.device != "cuda":
+        if not str(self.device).startswith("cuda"):
             self._model = self._model.to(self.device)
         self._model.eval()
 
@@ -187,7 +222,7 @@ Please answer the student's latest question based on the campus documents and co
 
         inputs = self._tokenizer(
             input_text, return_tensors="pt", truncation=True, max_length=2048,
-        ).to(self.device)
+        ).to(self._get_input_device())
 
         with torch.no_grad():
             outputs = self._model.generate(

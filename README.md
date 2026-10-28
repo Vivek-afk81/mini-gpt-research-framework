@@ -162,6 +162,42 @@ venv\Scripts\activate       # On Linux/macOS: source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+### Working QLoRA Prototype
+
+#### 1) Prepare fine-tuning data locally
+```bash
+python src/finetune/dataset.py
+```
+This writes: `data/finetuning/train_chat.jsonl`.
+
+#### 2) Run Colab training workflow
+- Open `notebooks/lexiflow_qlora_colab.py` in Google Colab.
+- Select **Runtime → Change runtime type → T4 GPU**.
+- Run all cells. The workflow will:
+  - install dependencies (`requirements.txt` + `requirements-qlora.txt`)
+  - prepare dataset
+  - verify GPU
+  - train QLoRA adapter (`checkpoints/qlora`)
+  - run a quick smoke test
+  - zip + download `lexiflow-qlora.zip`
+
+#### 3) Download and extract adapter locally
+Place/extract downloaded archive so these files exist:
+```text
+checkpoints/qlora/adapter_config.json
+checkpoints/qlora/adapter_model.safetensors
+```
+
+#### 4) Install local finetuned-inference dependencies
+```bash
+pip install -r requirements.txt -r requirements-qlora.txt
+```
+
+#### 5) Run local smoke test (3 Hinglish prompts)
+```bash
+python scripts/test_finetuned.py
+```
+
 ### Running Tests
 
 Run the complete unit test suite (18 tests verifying tokenizer, masking, model forward pass, and generation):

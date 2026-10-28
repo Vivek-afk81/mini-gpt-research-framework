@@ -5,8 +5,15 @@ Converts the campus JSONL dataset into instruction-tuning format
 compatible with HuggingFace chat templates (ChatML / Alpaca).
 """
 
+import argparse
 import json
 from pathlib import Path
+
+
+CATEGORY_MAP = {
+    "examination_query": "exam_query",
+    "complaint_request": "complaint",
+}
 
 
 def load_jsonl(path):
@@ -18,6 +25,53 @@ def load_jsonl(path):
             if line:
                 examples.append(json.loads(line))
     return examples
+
+
+def normalize_category(category):
+    """Normalize category names across baseline and fine-tuning flows."""
+    if not category:
+        return "assignment_query"
+    normalized = category.strip().lower()
+    normalized = normalized.replace("-", "_").replace(" ", "_")
+    return CATEGORY_MAP.get(normalized, normalized)
+
+
+def _require_text(value, field_name, index):
+    text = str(value or "").strip()
+    if not text:
+        raise ValueError(f"Missing non-empty '{field_name}' at example index {index}")
+    return text
+
+
+def validate_chat_example(example, index):
+    """Validate one chat-format training row."""
+    messages = example.get("messages")
+    if not isinstance(messages, list):
+        raise ValueError(f"Example index {index} has no 'messages' list")
+    if len(messages) < 3:
+        raise ValueError(f"Example index {index} has fewer than 3 messages")
+
+    required_roles = {"system", "user", "assistant"}
+    roles = set()
+    for msg in messages:
+        role = msg.get("role")
+        content = str(msg.get("content", "")).strip()
+        if role not in {"system", "user", "assistant"}:
+            raise ValueError(f"Example index {index} has invalid role '{role}'")
+        if not content:
+            raise ValueError(f"Example index {index} has empty content for role '{role}'")
+        roles.add(role)
+
+    if not required_roles.issubset(roles):
+        raise ValueError(
+            f"Example index {index} must include system/user/assistant roles (got: {sorted(roles)})"
+        )
+
+
+def validate_chat_dataset(data):
+    """Validate all chat-format rows before writing."""
+    for idx, example in enumerate(data):
+        validate_chat_example(example, idx)
 
 
 def format_for_instruction_tuning(examples):
@@ -37,20 +91,23 @@ def format_for_instruction_tuning(examples):
     )
 
     formatted = []
-    for ex in examples:
+    for idx, ex in enumerate(examples):
+        category = normalize_category(ex.get("category"))
+        user_text = _require_text(ex.get("input"), "input", idx)
+        assistant_text = _require_text(ex.get("output"), "output", idx)
         formatted.append({
             "messages": [
                 {
                     "role": "system",
-                    "content": system_prompt.format(category=ex["category"].replace("_", " ")),
+                    "content": system_prompt.format(category=category.replace("_", " ")),
                 },
                 {
                     "role": "user",
-                    "content": ex["input"],
+                    "content": user_text,
                 },
                 {
                     "role": "assistant",
-                    "content": ex["output"],
+                    "content": assistant_text,
                 },
             ]
         })
@@ -58,7 +115,7 @@ def format_for_instruction_tuning(examples):
     return formatted
 
 
-def format_for_qa_tuning(examples, knowledge_dir="data/knowledge"):
+def format_for_qa_tuning():
     """
     Create question-answering training examples from campus documents.
 
@@ -143,6 +200,7 @@ def format_for_qa_tuning(examples, knowledge_dir="data/knowledge"):
 
 def save_chat_jsonl(data, output_path):
     """Save formatted chat data as JSONL."""
+    validate_chat_dataset(data)
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w", encoding="utf-8") as f:
         for item in data:
@@ -153,6 +211,7 @@ def save_chat_jsonl(data, output_path):
 def prepare_finetuning_data(
     raw_path="data/raw/campus_messages.jsonl",
     output_dir="data/finetuning",
+    include_qa=True,
 ):
     """
     Prepare the complete fine-tuning dataset:
@@ -164,7 +223,7 @@ def prepare_finetuning_data(
     instruction_data = format_for_instruction_tuning(raw_examples)
 
     # Add QA examples
-    qa_data = format_for_qa_tuning(raw_examples)
+    qa_data = format_for_qa_tuning() if include_qa else []
 
     # Combine
     all_data = instruction_data + qa_data
@@ -177,4 +236,14 @@ def prepare_finetuning_data(
 
 
 if __name__ == "__main__":
-    prepare_finetuning_data()
+    parser = argparse.ArgumentParser(description="Prepare QLoRA chat-format dataset for LexiFlow")
+    parser.add_argument("--raw-path", default="data/raw/campus_messages.jsonl")
+    parser.add_argument("--output-dir", default="data/finetuning")
+    parser.add_argument("--no-qa", action="store_true", help="Skip built-in QA augmentation examples")
+    args = parser.parse_args()
+
+    prepare_finetuning_data(
+        raw_path=args.raw_path,
+        output_dir=args.output_dir,
+        include_qa=not args.no_qa,
+    )
