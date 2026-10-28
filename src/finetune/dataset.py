@@ -209,8 +209,9 @@ def save_chat_jsonl(data, output_path):
 
 
 def prepare_finetuning_data(
-    raw_path="data/raw/campus_messages.jsonl",
+    raw_path="data/raw/campus_messages_v2.jsonl",
     output_dir="data/finetuning",
+    output_filename="train_chat.jsonl",
     include_qa=True,
 ):
     """
@@ -218,8 +219,14 @@ def prepare_finetuning_data(
     - Instruction-tuning examples from Hinglish pairs
     - QA examples from campus documents
     """
+    # Fallback to campus_messages.jsonl if specified path does not exist
+    actual_raw_path = raw_path
+    if not Path(actual_raw_path).exists() and Path("data/raw/campus_messages.jsonl").exists():
+        actual_raw_path = "data/raw/campus_messages.jsonl"
+        print(f"Warning: {raw_path} not found. Falling back to {actual_raw_path}")
+
     # Load and format Hinglish → English pairs
-    raw_examples = load_jsonl(raw_path)
+    raw_examples = load_jsonl(actual_raw_path)
     instruction_data = format_for_instruction_tuning(raw_examples)
 
     # Add QA examples
@@ -227,23 +234,35 @@ def prepare_finetuning_data(
 
     # Combine
     all_data = instruction_data + qa_data
+    print(f"Source: {actual_raw_path}")
     print(f"Total: {len(instruction_data)} instruction + {len(qa_data)} QA = {len(all_data)} examples")
 
     # Save
-    save_chat_jsonl(all_data, f"{output_dir}/train_chat.jsonl")
+    out_path = Path(output_dir) / output_filename
+    save_chat_jsonl(all_data, str(out_path))
 
     return all_data
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Prepare QLoRA chat-format dataset for LexiFlow")
-    parser.add_argument("--raw-path", default="data/raw/campus_messages.jsonl")
+    parser.add_argument(
+        "--raw-path",
+        default="data/raw/campus_messages_v2.jsonl" if Path("data/raw/campus_messages_v2.jsonl").exists() else "data/raw/campus_messages.jsonl",
+        help="Path to raw campus messages JSONL (default: campus_messages_v2.jsonl if present)"
+    )
     parser.add_argument("--output-dir", default="data/finetuning")
+    parser.add_argument(
+        "--output-file",
+        default="train_chat.jsonl",
+        help="Output JSONL filename (default: train_chat.jsonl)"
+    )
     parser.add_argument("--no-qa", action="store_true", help="Skip built-in QA augmentation examples")
     args = parser.parse_args()
 
     prepare_finetuning_data(
         raw_path=args.raw_path,
         output_dir=args.output_dir,
+        output_filename=args.output_file,
         include_qa=not args.no_qa,
     )
