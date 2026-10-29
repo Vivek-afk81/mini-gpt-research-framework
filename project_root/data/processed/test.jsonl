@@ -1,0 +1,180 @@
+{"input": "kya mujhe apni attendance ka record mil sakta hai maam", "output": "Ma'am, can I get my attendance record?", "category": "attendance_request", "tone": "formal", "id": 75}
+{"input": "sir kya mujhe apni attendance ka record mil sakta hai", "output": "Sir, can I get my attendance record?", "category": "attendance_request", "tone": "formal", "id": 251}
+{"input": "kya mujhe apni attendance ka record mil sakta hai ma'am", "output": "Ma'am, can I get my attendance record?", "category": "attendance_request", "tone": "formal", "id": 281}
+{"input": "kya mujhe apni attendance ka record mil sakta hai sir", "output": "Sir, can I get my attendance record?", "category": "attendance_request", "tone": "formal", "id": 604}
+{"input": "kya mujhe apni attendance ka record mil sakta hai", "output": "Can I get my attendance record?", "category": "attendance_request", "tone": "formal", "id": 868}
+{"input": "maam kya mujhe apni attendance ka record mil sakta hai", "output": "Ma'am, can I get my attendance record?", "category": "attendance_request", "tone": "formal", "id": 911}
+{"input": "madam kya mujhe apni attendance ka record mil sakta hai", "output": "Madam, can I get my attendance record?", "category": "attendance_request", "tone": "formal", "id": 913}
+{"input": "ma'am kya mujhe apni attendance ka record mil sakta hai", "output": "Ma'am, can I get my attendance record?", "category": "attendance_request", "tone": "formal", "id": 953}
+{"input": "maam mera laptop kaam nahi kar raha hai, isliye assignment kal tak submit nahi kar paungi", "output": "Ma'am, my laptop is not working, so I will not be able to submit the assignment by tomorrow.", "category": "deadline_extension", "tone": "formal", "id": 395}
+{"input": "Java assignment Monday tak jama karna hai kya maam", "output": "Ma'am, do we need to submit the Java assignment by Monday?", "category": "assignment_query", "tone": "formal", "id": 713}
+{"input": "exam ka seating plan kahan milega ma'am", "output": "Ma'am, where can we find the exam seating plan?", "category": "examination_query", "tone": "formal", "id": 26}
+{"input": "maam exam ka seating plan kahan milega", "output": "Ma'am, where can we find the exam seating plan?", "category": "examination_query", "tone": "formal", "id": 170}
+{"input": "exam ka seating plan kahan milega maam", "output": "Ma'am, where can we find the exam seating plan?", "category": "examination_query", "tone": "formal", "id": 212}
+{"input": "sir exam ka seating plan kahan milega", "output": "Sir, where can we find the exam seating plan?", "category": "examination_query", "tone": "formal", "id": 472}
+{"input": "madam exam ka seating plan kahan milega", "output": "Madam, where can we find the exam seating plan?", "category": "examination_query", "tone": "formal", "id": 725}
+{"input": "exam ka seating plan kahan milega", "output": "Where can we find the exam seating plan?", "category": "examination_query", "tone": "formal", "id": 905}
+{"input": "exam ka seating plan kahan milega Sir", "output": "Sir, where can we find the exam seating plan?", "category": "examination_query", "tone": "formal", "id": 937}
+{"input": "ma'am exam ka seating plan kahan milega", "output": "Ma'am, where can we find the exam seating plan?", "category": "examination_query", "tone": "formal", "id": 1187}
+{"input": "mam kripya projector ki problem theek karwa dijiye", "output": "Ma'am, kindly get the problem with the projector fixed.", "category": "complaint_request", "tone": "polite", "id": 829}
+{"input": "sir meri tabiyat theek nahi hai, kya main Monday ko class mein absent reh sakta hoon", "output": "Sir, I am not feeling well. May I be absent from class on Monday?", "category": "leave_request", "tone": "formal", "id": 185}
+{"input": "kya agle hafte se 5 din ki leave mil sakti hai sir", "output": "Sir, can I get leave for 5 days starting next week?", "category": "leave_request", "tone": "formal", "id": 554}
+{"input": "kya agle hafte se 4 din ki leave mil sakti hai", "output": "Can I get leave for 4 days starting next week?", "category": "leave_request", "tone": "formal", "id": 699}
+{"input": "maam kya agle hafte se 4 din ki leave mil sakti hai", "output": "Ma'am, can I get leave for 4 days starting next week?", "category": "leave_request", "tone": "formal", "id": 1025}
+{"input": "worksheet adhura hai, kya deadline extend ho sakti hai", "output": "The worksheet is incomplete. Can the deadline be extended?", "category": "deadline_extension", "tone": "formal", "id": 269}
+{"input": "worksheet adhura hai, kya deadline extend ho sakti hai maam", "output": "Ma'am, the worksheet is incomplete. Can the deadline be extended?", "category": "deadline_extension", "tone": "formal", "id": 518}
+{"input": "maam worksheet adhura hai, kya deadline extend ho sakti hai", "output": "Ma'am, the worksheet is incomplete. Can the deadline be extended?", "category": "deadline_extension", "tone": "formal", "id": 764}
+{"input": "sir mujhe bukhar hai isliye mujhe parso ki leave chahiye", "output": "Sir, I have a fever, so I need leave for the day after tomorrow.", "category": "leave_request", "tone": "formal", "id": 899}
+{"input": "kya main parso leave le sakta hoon sir", "output": "Sir, may I take leave on the day after tomorrow?", "category": "leave_request", "tone": "formal", "id": 278}
+{"input": "kya main parso leave le sakta hoon ma'am", "output": "Ma'am, may I take leave on the day after tomorrow?", "category": "leave_request", "tone": "formal", "id": 817}
+{"input": "maam kya main parso leave le sakta hoon", "output": "Ma'am, may I take leave on the day after tomorrow?", "category": "leave_request", "tone": "formal", "id": 897}
+{"input": "kya main parso leave le sakta hoon madam", "output": "Madam, may I take leave on the day after tomorrow?", "category": "leave_request", "tone": "formal", "id": 904}
+{"input": "madam Machine Learning ka exam kitne baje start hoga", "output": "Madam, what time will the Machine Learning exam start?", "category": "examination_query", "tone": "formal", "id": 57}
+{"input": "maam Computer Networks ka exam kitne baje start hoga", "output": "Ma'am, what time will the Computer Networks exam start?", "category": "examination_query", "tone": "formal", "id": 168}
+{"input": "madam Maths ka exam kitne baje start hoga", "output": "Madam, what time will the Maths exam start?", "category": "examination_query", "tone": "formal", "id": 302}
+{"input": "Physics ka exam kitne baje start hoga", "output": "What time will the Physics exam start?", "category": "examination_query", "tone": "formal", "id": 352}
+{"input": "Python ka exam kitne baje start hoga maam", "output": "Ma'am, what time will the Python exam start?", "category": "examination_query", "tone": "formal", "id": 449}
+{"input": "Sir Computer Networks ka exam kitne baje start hoga", "output": "Sir, what time will the Computer Networks exam start?", "category": "examination_query", "tone": "formal", "id": 452}
+{"input": "madam Java ka exam kitne baje start hoga", "output": "Madam, what time will the Java exam start?", "category": "examination_query", "tone": "formal", "id": 462}
+{"input": "Chemistry ka exam kitne baje start hoga sir", "output": "Sir, what time will the Chemistry exam start?", "category": "examination_query", "tone": "formal", "id": 535}
+{"input": "maam DBMS ka exam kitne baje start hoga", "output": "Ma'am, what time will the DBMS exam start?", "category": "examination_query", "tone": "formal", "id": 610}
+{"input": "Sir Machine Learning ka exam kitne baje start hoga", "output": "Sir, what time will the Machine Learning exam start?", "category": "examination_query", "tone": "formal", "id": 703}
+{"input": "Machine Learning ka exam kitne baje start hoga", "output": "What time will the Machine Learning exam start?", "category": "examination_query", "tone": "formal", "id": 733}
+{"input": "sir Python ka exam kitne baje start hoga", "output": "Sir, what time will the Python exam start?", "category": "examination_query", "tone": "formal", "id": 943}
+{"input": "Maths ka exam kitne baje start hoga Sir", "output": "Sir, what time will the Maths exam start?", "category": "examination_query", "tone": "formal", "id": 1070}
+{"input": "kripya fan ki problem theek karwa dijiye ma'am", "output": "Ma'am, kindly get the problem with the fan fixed.", "category": "complaint_request", "tone": "polite", "id": 309}
+{"input": "maam kripya fan ki problem theek karwa dijiye", "output": "Ma'am, kindly get the problem with the fan fixed.", "category": "complaint_request", "tone": "polite", "id": 561}
+{"input": "kripya fan ki problem theek karwa dijiye sir", "output": "Sir, kindly get the problem with the fan fixed.", "category": "complaint_request", "tone": "polite", "id": 1060}
+{"input": "sir kripya fan ki problem theek karwa dijiye", "output": "Sir, kindly get the problem with the fan fixed.", "category": "complaint_request", "tone": "polite", "id": 1129}
+{"input": "Sir kya main agle hafte leave le sakti hoon", "output": "Sir, may I take leave next week?", "category": "leave_request", "tone": "formal", "id": 1134}
+{"input": "Chemistry assignment ki deadline badha sakte hain kya", "output": "Can the deadline for the Chemistry assignment be extended?", "category": "deadline_extension", "tone": "formal", "id": 60}
+{"input": "sir Chemistry assignment ki deadline badha sakte hain kya", "output": "Sir, can the deadline for the Chemistry assignment be extended?", "category": "deadline_extension", "tone": "formal", "id": 113}
+{"input": "sir Maths assignment ki deadline badha sakte hain kya", "output": "Sir, can the deadline for the Maths assignment be extended?", "category": "deadline_extension", "tone": "formal", "id": 477}
+{"input": "Physics assignment ki deadline badha sakte hain kya", "output": "Can the deadline for the Physics assignment be extended?", "category": "deadline_extension", "tone": "formal", "id": 596}
+{"input": "Java assignment ki deadline badha sakte hain kya sir", "output": "Sir, can the deadline for the Java assignment be extended?", "category": "deadline_extension", "tone": "formal", "id": 1185}
+{"input": "classroom mein mic kaam nahi kar raha hai maam", "output": "Ma'am, the microphone in the classroom is not working.", "category": "complaint_request", "tone": "formal", "id": 260}
+{"input": "ma'am classroom mein mic kaam nahi kar raha hai", "output": "Ma'am, the microphone in the classroom is not working.", "category": "complaint_request", "tone": "formal", "id": 292}
+{"input": "Sir classroom mein mic kaam nahi kar raha hai", "output": "Sir, the microphone in the classroom is not working.", "category": "complaint_request", "tone": "formal", "id": 979}
+{"input": "classroom mein mic kaam nahi kar raha hai", "output": "The microphone in the classroom is not working.", "category": "complaint_request", "tone": "formal", "id": 1049}
+{"input": "ma'am mera laptop kaam nahi kar raha hai, isliye assignment parso tak submit nahi kar paunga", "output": "Ma'am, my laptop is not working, so I will not be able to submit the assignment by the day after tomorrow.", "category": "deadline_extension", "tone": "formal", "id": 776}
+{"input": "sir mujhe Physics assignment ke liye ek hafta aur chahiye", "output": "Sir, I need one more week for the Physics assignment.", "category": "deadline_extension", "tone": "formal", "id": 140}
+{"input": "sir mujhe Computer Networks assignment ke liye ek hafta aur chahiye", "output": "Sir, I need one more week for the Computer Networks assignment.", "category": "deadline_extension", "tone": "formal", "id": 216}
+{"input": "sir Python assignment email par bhejna hai kya", "output": "Sir, should we send the Python assignment by email?", "category": "assignment_query", "tone": "formal", "id": 98}
+{"input": "Machine Learning assignment email par bhejna hai kya", "output": "Should we send the Machine Learning assignment by email?", "category": "assignment_query", "tone": "formal", "id": 314}
+{"input": "sir Chemistry assignment email par bhejna hai kya", "output": "Sir, should we send the Chemistry assignment by email?", "category": "assignment_query", "tone": "formal", "id": 444}
+{"input": "maam Physics assignment email par bhejna hai kya", "output": "Ma'am, should we send the Physics assignment by email?", "category": "assignment_query", "tone": "formal", "id": 657}
+{"input": "mujhe aaj se 5 din ki leave chahiye mam", "output": "Ma'am, I need leave for 5 days starting today.", "category": "leave_request", "tone": "formal", "id": 1089}
+{"input": "madam kripya AC ki problem theek karwa dijiye", "output": "Madam, kindly get the problem with the AC fixed.", "category": "complaint_request", "tone": "polite", "id": 265}
+{"input": "sir kripya AC ki problem theek karwa dijiye", "output": "Sir, kindly get the problem with the AC fixed.", "category": "complaint_request", "tone": "polite", "id": 464}
+{"input": "assignment hard copy mein submit karna hai kya ma'am", "output": "Ma'am, do we need to submit the assignment as a hard copy?", "category": "assignment_query", "tone": "formal", "id": 1143}
+{"input": "mam kya aaj se 3 din ki leave mil sakti hai", "output": "Ma'am, can I get leave for 3 days starting today?", "category": "leave_request", "tone": "formal", "id": 663}
+{"input": "maam main class mein late aayi, kya attendance mil sakti hai", "output": "Ma'am, I arrived late to class. Can my attendance be marked?", "category": "attendance_request", "tone": "formal", "id": 101}
+{"input": "ma'am main class mein late aayi, kya attendance mil sakti hai", "output": "Ma'am, I arrived late to class. Can my attendance be marked?", "category": "attendance_request", "tone": "formal", "id": 186}
+{"input": "main class mein late aayi, kya attendance mil sakti hai sir", "output": "Sir, I arrived late to class. Can my attendance be marked?", "category": "attendance_request", "tone": "formal", "id": 318}
+{"input": "sir main class mein late aayi, kya attendance mil sakti hai", "output": "Sir, I arrived late to class. Can my attendance be marked?", "category": "attendance_request", "tone": "formal", "id": 359}
+{"input": "main class mein late aayi, kya attendance mil sakti hai", "output": "I arrived late to class. Can my attendance be marked?", "category": "attendance_request", "tone": "formal", "id": 723}
+{"input": "kripya Chemistry assignment ki last date ek din badha dijiye", "output": "Kindly extend the last date for the Chemistry assignment by one day.", "category": "deadline_extension", "tone": "polite", "id": 828}
+{"input": "mam mera result portal par galat dikh raha hai", "output": "Ma'am, my result is showing incorrectly on the portal.", "category": "complaint_request", "tone": "formal", "id": 773}
+{"input": "mera Java ka exam miss ho gaya, kya re-exam hoga sir", "output": "Sir, I missed my Java exam. Will there be a re-exam?", "category": "examination_query", "tone": "formal", "id": 4}
+{"input": "maam mera Java ka exam miss ho gaya, kya re-exam hoga", "output": "Ma'am, I missed my Java exam. Will there be a re-exam?", "category": "examination_query", "tone": "formal", "id": 132}
+{"input": "sir mera Chemistry ka exam miss ho gaya, kya re-exam hoga", "output": "Sir, I missed my Chemistry exam. Will there be a re-exam?", "category": "examination_query", "tone": "formal", "id": 151}
+{"input": "ma'am mera Machine Learning ka exam miss ho gaya, kya re-exam hoga", "output": "Ma'am, I missed my Machine Learning exam. Will there be a re-exam?", "category": "examination_query", "tone": "formal", "id": 245}
+{"input": "mera Chemistry ka exam miss ho gaya, kya re-exam hoga", "output": "I missed my Chemistry exam. Will there be a re-exam?", "category": "examination_query", "tone": "formal", "id": 290}
+{"input": "sir mera Physics ka exam miss ho gaya, kya re-exam hoga", "output": "Sir, I missed my Physics exam. Will there be a re-exam?", "category": "examination_query", "tone": "formal", "id": 407}
+{"input": "sir mera DSA ka exam miss ho gaya, kya re-exam hoga", "output": "Sir, I missed my DSA exam. Will there be a re-exam?", "category": "examination_query", "tone": "formal", "id": 453}
+{"input": "mera Maths ka exam miss ho gaya, kya re-exam hoga madam", "output": "Madam, I missed my Maths exam. Will there be a re-exam?", "category": "examination_query", "tone": "formal", "id": 469}
+{"input": "sir mera Machine Learning ka exam miss ho gaya, kya re-exam hoga", "output": "Sir, I missed my Machine Learning exam. Will there be a re-exam?", "category": "examination_query", "tone": "formal", "id": 639}
+{"input": "mera Python ka exam miss ho gaya, kya re-exam hoga Sir", "output": "Sir, I missed my Python exam. Will there be a re-exam?", "category": "examination_query", "tone": "formal", "id": 648}
+{"input": "maam mera OS ka exam miss ho gaya, kya re-exam hoga", "output": "Ma'am, I missed my OS exam. Will there be a re-exam?", "category": "examination_query", "tone": "formal", "id": 1092}
+{"input": "madam mera DSA ka exam miss ho gaya, kya re-exam hoga", "output": "Madam, I missed my DSA exam. Will there be a re-exam?", "category": "examination_query", "tone": "formal", "id": 1160}
+{"input": "madam mera Computer Networks ka exam miss ho gaya, kya re-exam hoga", "output": "Madam, I missed my Computer Networks exam. Will there be a re-exam?", "category": "examination_query", "tone": "formal", "id": 1200}
+{"input": "madam DSA assignment kal tak jama karna hai kya", "output": "Madam, do we need to submit the DSA assignment by tomorrow?", "category": "assignment_query", "tone": "formal", "id": 932}
+{"input": "mam internet issue ki wajah se DBMS assignment upload nahi ho paya, kya main Monday tak submit kar sakta hoon", "output": "Ma'am, I could not upload the DBMS assignment due to an internet issue. Can I submit it by Monday?", "category": "deadline_extension", "tone": "formal", "id": 832}
+{"input": "sir kya main kal leave le sakti hoon", "output": "Sir, may I take leave tomorrow?", "category": "leave_request", "tone": "formal", "id": 1179}
+{"input": "mam DBMS assignment ke marks kitne hain", "output": "Ma'am, how many marks is the DBMS assignment worth?", "category": "assignment_query", "tone": "formal", "id": 540}
+{"input": "mam submission portal kaam nahi kar raha hai", "output": "Ma'am, the submission portal is not working.", "category": "complaint_request", "tone": "formal", "id": 384}
+{"input": "ma'am lab mein wifi kaam nahi kar raha hai", "output": "Ma'am, the Wi-Fi is not working in the lab.", "category": "complaint_request", "tone": "formal", "id": 145}
+{"input": "maam lab mein wifi kaam nahi kar raha hai", "output": "Ma'am, the Wi-Fi is not working in the lab.", "category": "complaint_request", "tone": "formal", "id": 200}
+{"input": "sir lab mein wifi kaam nahi kar raha hai", "output": "Sir, the Wi-Fi is not working in the lab.", "category": "complaint_request", "tone": "formal", "id": 373}
+{"input": "lab mein wifi kaam nahi kar raha hai", "output": "The Wi-Fi is not working in the lab.", "category": "complaint_request", "tone": "formal", "id": 526}
+{"input": "lab mein wifi kaam nahi kar raha hai sir", "output": "Sir, the Wi-Fi is not working in the lab.", "category": "complaint_request", "tone": "formal", "id": 1015}
+{"input": "madam lab mein wifi kaam nahi kar raha hai", "output": "Madam, the Wi-Fi is not working in the lab.", "category": "complaint_request", "tone": "formal", "id": 1135}
+{"input": "mam attendance sheet kab tak update hogi", "output": "Ma'am, by when will the attendance sheet be updated?", "category": "attendance_request", "tone": "formal", "id": 353}
+{"input": "Sir mera laptop kaam nahi kar raha hai, isliye DSA assignment Friday tak submit nahi kar paungi", "output": "Sir, my laptop is not working, so I will not be able to submit the DSA assignment by Friday.", "category": "deadline_extension", "tone": "formal", "id": 1159}
+{"input": "sir mujhe bukhar hai isliye mujhe Friday ki leave chahiye", "output": "Sir, I have a fever, so I need leave for Friday.", "category": "leave_request", "tone": "formal", "id": 675}
+{"input": "project report kahan submit karna hai maam", "output": "Ma'am, where do we need to submit the project report?", "category": "assignment_query", "tone": "formal", "id": 602}
+{"input": "mam mere Physics ke marks galat lage hain, kya aap check kar sakte hain", "output": "Ma'am, my marks in Physics have been recorded incorrectly. Could you please check?", "category": "complaint_request", "tone": "polite", "id": 692}
+{"input": "mam mere Python ke marks galat lage hain, kya aap check kar sakte hain", "output": "Ma'am, my marks in Python have been recorded incorrectly. Could you please check?", "category": "complaint_request", "tone": "polite", "id": 1000}
+{"input": "sir kripya Python assignment ki last date 3 din badha dijiye", "output": "Sir, kindly extend the last date for the Python assignment by 3 days.", "category": "deadline_extension", "tone": "polite", "id": 127}
+{"input": "kripya Chemistry assignment ki last date 3 din badha dijiye sir", "output": "Sir, kindly extend the last date for the Chemistry assignment by 3 days.", "category": "deadline_extension", "tone": "polite", "id": 397}
+{"input": "kripya DSA assignment ki last date 2 din badha dijiye maam", "output": "Ma'am, kindly extend the last date for the DSA assignment by 2 days.", "category": "deadline_extension", "tone": "polite", "id": 456}
+{"input": "sir kripya OS assignment ki last date 3 din badha dijiye", "output": "Sir, kindly extend the last date for the OS assignment by 3 days.", "category": "deadline_extension", "tone": "polite", "id": 474}
+{"input": "sir kripya Machine Learning assignment ki last date 4 din badha dijiye", "output": "Sir, kindly extend the last date for the Machine Learning assignment by 4 days.", "category": "deadline_extension", "tone": "polite", "id": 738}
+{"input": "madam kripya Maths assignment ki last date 3 din badha dijiye", "output": "Madam, kindly extend the last date for the Maths assignment by 3 days.", "category": "deadline_extension", "tone": "polite", "id": 950}
+{"input": "sir kripya Computer Networks assignment ki last date 5 din badha dijiye", "output": "Sir, kindly extend the last date for the Computer Networks assignment by 5 days.", "category": "deadline_extension", "tone": "polite", "id": 1001}
+{"input": "maam kripya Maths assignment ki last date 4 din badha dijiye", "output": "Ma'am, kindly extend the last date for the Maths assignment by 4 days.", "category": "deadline_extension", "tone": "polite", "id": 1156}
+{"input": "Sir please Machine Learning assignment ki deadline ek din badha dijiye", "output": "Sir, please extend the deadline for the Machine Learning assignment by one day.", "category": "deadline_extension", "tone": "polite", "id": 504}
+{"input": "please Physics assignment ki deadline ek din badha dijiye sir", "output": "Sir, please extend the deadline for the Physics assignment by one day.", "category": "deadline_extension", "tone": "polite", "id": 875}
+{"input": "mam kya mujhe DBMS assignment ke liye 5 din aur mil sakte hain", "output": "Ma'am, can I get 5 more days for the DBMS assignment?", "category": "deadline_extension", "tone": "formal", "id": 15}
+{"input": "mam kya mujhe DSA assignment ke liye 2 din aur mil sakte hain", "output": "Ma'am, can I get 2 more days for the DSA assignment?", "category": "deadline_extension", "tone": "formal", "id": 609}
+{"input": "madam mere pitaji ki tabiyat kharab hai isliye mujhe aaj ki leave chahiye", "output": "Madam, my father is unwell, so I need leave for today.", "category": "leave_request", "tone": "formal", "id": 553}
+{"input": "mam meri Maths ki attendance galat lagi hai", "output": "Ma'am, my attendance for Maths has been marked incorrectly.", "category": "attendance_request", "tone": "formal", "id": 445}
+{"input": "mam meri Physics ki attendance galat lagi hai", "output": "Ma'am, my attendance for Physics has been marked incorrectly.", "category": "attendance_request", "tone": "formal", "id": 754}
+{"input": "mujhe 5 din ki leave chahiye, mujhe doctor ke paas jaana hai maam", "output": "Ma'am, I need leave for 5 days, as I have to visit the doctor.", "category": "leave_request", "tone": "formal", "id": 158}
+{"input": "maam mujhe 2 din ki leave chahiye, mujhe doctor ke paas jaana hai", "output": "Ma'am, I need leave for 2 days, as I have to visit the doctor.", "category": "leave_request", "tone": "formal", "id": 305}
+{"input": "madam please DSA assignment ki deadline 5 din badha dijiye", "output": "Madam, please extend the deadline for the DSA assignment by 5 days.", "category": "deadline_extension", "tone": "polite", "id": 143}
+{"input": "sir please Chemistry assignment ki deadline 4 din badha dijiye", "output": "Sir, please extend the deadline for the Chemistry assignment by 4 days.", "category": "deadline_extension", "tone": "polite", "id": 221}
+{"input": "Sir please Machine Learning assignment ki deadline 2 din badha dijiye", "output": "Sir, please extend the deadline for the Machine Learning assignment by 2 days.", "category": "deadline_extension", "tone": "polite", "id": 846}
+{"input": "maam please DSA assignment ki deadline 5 din badha dijiye", "output": "Ma'am, please extend the deadline for the DSA assignment by 5 days.", "category": "deadline_extension", "tone": "polite", "id": 1141}
+{"input": "please Maths assignment ki deadline 3 din badha dijiye sir", "output": "Sir, please extend the deadline for the Maths assignment by 3 days.", "category": "deadline_extension", "tone": "polite", "id": 1197}
+{"input": "madam Chemistry ke exam mein syllabus kya aayega", "output": "Madam, what will be the syllabus for the Chemistry exam?", "category": "examination_query", "tone": "formal", "id": 55}
+{"input": "ma'am Chemistry ke exam mein syllabus kya aayega", "output": "Ma'am, what will be the syllabus for the Chemistry exam?", "category": "examination_query", "tone": "formal", "id": 82}
+{"input": "madam DBMS ke exam mein syllabus kya aayega", "output": "Madam, what will be the syllabus for the DBMS exam?", "category": "examination_query", "tone": "formal", "id": 94}
+{"input": "sir Chemistry ke exam mein syllabus kya aayega", "output": "Sir, what will be the syllabus for the Chemistry exam?", "category": "examination_query", "tone": "formal", "id": 307}
+{"input": "OS ke exam mein syllabus kya aayega", "output": "What will be the syllabus for the OS exam?", "category": "examination_query", "tone": "formal", "id": 342}
+{"input": "Python ke exam mein syllabus kya aayega maam", "output": "Ma'am, what will be the syllabus for the Python exam?", "category": "examination_query", "tone": "formal", "id": 358}
+{"input": "Chemistry ke exam mein syllabus kya aayega madam", "output": "Madam, what will be the syllabus for the Chemistry exam?", "category": "examination_query", "tone": "formal", "id": 455}
+{"input": "Physics ke exam mein syllabus kya aayega sir", "output": "Sir, what will be the syllabus for the Physics exam?", "category": "examination_query", "tone": "formal", "id": 649}
+{"input": "Python ke exam mein syllabus kya aayega", "output": "What will be the syllabus for the Python exam?", "category": "examination_query", "tone": "formal", "id": 685}
+{"input": "Chemistry ke exam mein syllabus kya aayega", "output": "What will be the syllabus for the Chemistry exam?", "category": "examination_query", "tone": "formal", "id": 712}
+{"input": "madam Physics ke exam mein syllabus kya aayega", "output": "Madam, what will be the syllabus for the Physics exam?", "category": "examination_query", "tone": "formal", "id": 901}
+{"input": "Machine Learning ke exam mein syllabus kya aayega", "output": "What will be the syllabus for the Machine Learning exam?", "category": "examination_query", "tone": "formal", "id": 1062}
+{"input": "Java ke exam mein syllabus kya aayega maam", "output": "Ma'am, what will be the syllabus for the Java exam?", "category": "examination_query", "tone": "formal", "id": 1118}
+{"input": "maam Java ke exam mein syllabus kya aayega", "output": "Ma'am, what will be the syllabus for the Java exam?", "category": "examination_query", "tone": "formal", "id": 1150}
+{"input": "Sir please mujhe 4 din ki leave de dijiye, mujhe doctor ke paas jaana hai", "output": "Sir, please grant me leave for 4 days, as I have to visit the doctor.", "category": "leave_request", "tone": "polite", "id": 17}
+{"input": "sir please mujhe 5 din ki leave de dijiye, mujhe doctor ke paas jaana hai", "output": "Sir, please grant me leave for 5 days, as I have to visit the doctor.", "category": "leave_request", "tone": "polite", "id": 417}
+{"input": "madam please mujhe 3 din ki leave de dijiye, mujhe doctor ke paas jaana hai", "output": "Madam, please grant me leave for 3 days, as I have to visit the doctor.", "category": "leave_request", "tone": "polite", "id": 1124}
+{"input": "sir worksheet ki deadline badha sakte hain kya", "output": "Sir, can the deadline for the worksheet be extended?", "category": "deadline_extension", "tone": "formal", "id": 18}
+{"input": "maam mujhe aaj se 2 din ki leave chahiye", "output": "Ma'am, I need leave for 2 days starting today.", "category": "leave_request", "tone": "formal", "id": 355}
+{"input": "madam mujhe aaj se 5 din ki leave chahiye", "output": "Madam, I need leave for 5 days starting today.", "category": "leave_request", "tone": "formal", "id": 1138}
+{"input": "sir please Friday ki leave de dijiye", "output": "Sir, please grant me leave for Friday.", "category": "leave_request", "tone": "polite", "id": 542}
+{"input": "please Friday ki leave de dijiye sir", "output": "Sir, please grant me leave for Friday.", "category": "leave_request", "tone": "polite", "id": 967}
+{"input": "madam mujhe kal se 3 din ki leave chahiye", "output": "Madam, I need leave for 3 days starting tomorrow.", "category": "leave_request", "tone": "formal", "id": 51}
+{"input": "mujhe kal se 5 din ki leave chahiye sir", "output": "Sir, I need leave for 5 days starting tomorrow.", "category": "leave_request", "tone": "formal", "id": 362}
+{"input": "ma'am meri fees receipt portal par nahi dikh rahi hai", "output": "Ma'am, my fee receipt is not showing on the portal.", "category": "complaint_request", "tone": "formal", "id": 488}
+{"input": "maam meri fees receipt portal par nahi dikh rahi hai", "output": "Ma'am, my fee receipt is not showing on the portal.", "category": "complaint_request", "tone": "formal", "id": 512}
+{"input": "sir meri fees receipt portal par nahi dikh rahi hai", "output": "Sir, my fee receipt is not showing on the portal.", "category": "complaint_request", "tone": "formal", "id": 715}
+{"input": "meri fees receipt portal par nahi dikh rahi hai", "output": "My fee receipt is not showing on the portal.", "category": "complaint_request", "tone": "formal", "id": 721}
+{"input": "meri fees receipt portal par nahi dikh rahi hai sir", "output": "Sir, my fee receipt is not showing on the portal.", "category": "complaint_request", "tone": "formal", "id": 847}
+{"input": "Sir pichle hafte ki attendance mein mera naam chhut gaya hai", "output": "Sir, my name was missed in last week's attendance.", "category": "attendance_request", "tone": "formal", "id": 964}
+{"input": "maam pichle hafte ki attendance mein mera naam chhut gaya hai", "output": "Ma'am, my name was missed in last week's attendance.", "category": "attendance_request", "tone": "formal", "id": 1173}
+{"input": "sir parso OS lab file submit karna hai kya", "output": "Sir, do we need to submit the OS lab file on the day after tomorrow?", "category": "assignment_query", "tone": "formal", "id": 748}
+{"input": "maam internet issue ki wajah se project report upload nahi ho paya, kya main agle hafte tak submit kar sakta hoon", "output": "Ma'am, I could not upload the project report due to an internet issue. Can I submit it by next week?", "category": "deadline_extension", "tone": "formal", "id": 636}
+{"input": "meri tabiyat theek nahi hai, kya main agle hafte class mein absent reh sakta hoon Sir", "output": "Sir, I am not feeling well. May I be absent from class next week?", "category": "leave_request", "tone": "formal", "id": 134}
+{"input": "madam Friday ko class mein assignment dikhana hai kya", "output": "Madam, do we need to show the assignment in class on Friday?", "category": "assignment_query", "tone": "formal", "id": 201}
+{"input": "madam mujhe urgent ghar jaana hai, kripya aaj ki leave approve kar dijiye", "output": "Madam, I have to go home urgently. Kindly approve my leave for today.", "category": "leave_request", "tone": "polite", "id": 381}
+{"input": "leave ke liye kisko apply karna hai mam", "output": "Ma'am, whom should I apply to for leave?", "category": "leave_request", "tone": "formal", "id": 432}
+{"input": "Sir main pichle hafte sports event mein thi isliye absent thi, kya uski attendance milegi", "output": "Sir, I was at a sports event last week, so I was absent. Will I be given attendance for it?", "category": "attendance_request", "tone": "formal", "id": 490}
+{"input": "madam DBMS ka exam kitne marks ka hoga", "output": "Madam, how many marks will the DBMS exam be?", "category": "examination_query", "tone": "formal", "id": 29}
+{"input": "Sir Chemistry ka exam kitne marks ka hoga", "output": "Sir, how many marks will the Chemistry exam be?", "category": "examination_query", "tone": "formal", "id": 176}
+{"input": "maam Computer Networks ka exam kitne marks ka hoga", "output": "Ma'am, how many marks will the Computer Networks exam be?", "category": "examination_query", "tone": "formal", "id": 192}
+{"input": "sir DSA ka exam kitne marks ka hoga", "output": "Sir, how many marks will the DSA exam be?", "category": "examination_query", "tone": "formal", "id": 247}
+{"input": "maam DBMS ka exam kitne marks ka hoga", "output": "Ma'am, how many marks will the DBMS exam be?", "category": "examination_query", "tone": "formal", "id": 303}
+{"input": "OS ka exam kitne marks ka hoga", "output": "How many marks will the OS exam be?", "category": "examination_query", "tone": "formal", "id": 427}
+{"input": "sir Python ka exam kitne marks ka hoga", "output": "Sir, how many marks will the Python exam be?", "category": "examination_query", "tone": "formal", "id": 682}
+{"input": "DBMS ka exam kitne marks ka hoga Sir", "output": "Sir, how many marks will the DBMS exam be?", "category": "examination_query", "tone": "formal", "id": 737}
+{"input": "sir Machine Learning ka exam kitne marks ka hoga", "output": "Sir, how many marks will the Machine Learning exam be?", "category": "examination_query", "tone": "formal", "id": 873}
+{"input": "maam OS ka exam kitne marks ka hoga", "output": "Ma'am, how many marks will the OS exam be?", "category": "examination_query", "tone": "formal", "id": 1029}
+{"input": "sir OS ka exam kitne marks ka hoga", "output": "Sir, how many marks will the OS exam be?", "category": "examination_query", "tone": "formal", "id": 1053}
+{"input": "DBMS ka exam kitne marks ka hoga", "output": "How many marks will the DBMS exam be?", "category": "examination_query", "tone": "formal", "id": 1103}
+{"input": "kya mujhe Machine Learning assignment ke liye ek hafta aur mil sakte hain mam", "output": "Ma'am, can I get one more week for the Machine Learning assignment?", "category": "deadline_extension", "tone": "formal", "id": 148}

@@ -1,0 +1,16 @@
+torch
+tiktoken
+pyyaml
+
+# Optional runtime features
+gradio
+groq
+faiss-cpu
+sentence-transformers
+
+# GPU fine-tuning only; install in Colab or Kaggle
+# transformers
+# datasets
+# peft
+# trl
+# bitsandbytes

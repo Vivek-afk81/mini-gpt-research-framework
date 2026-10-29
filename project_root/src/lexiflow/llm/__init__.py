@@ -1,0 +1,1 @@
+"""Optional hosted and local language-model adapters."""
