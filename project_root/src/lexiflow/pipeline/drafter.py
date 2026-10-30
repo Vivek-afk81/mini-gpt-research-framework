@@ -1,6 +1,7 @@
 """Grounded email drafting with a deterministic offline fallback."""
 
 import json
+import os
 
 from ..llm.groq_client import chat
 
@@ -12,7 +13,7 @@ def draft(english, category, tone, hits, profile=None, backend="local"):
         raw = chat([
             {"role": "system", "content": "Draft a concise formal college email. Use only supplied policy excerpts and cite claims as [P1]. If no policy applies, say so."},
             {"role": "user", "content": json.dumps({"request": english, "category": category, "tone": tone, "profile": profile, "policies": excerpts})},
-        ], model="llama-3.1-8b-instant", max_tokens=300)
+        ], model=os.getenv("GROQ_DRAFTER_MODEL", "qwen/qwen3-32b"), max_tokens=300)
         if raw:
             return raw
 

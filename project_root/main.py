@@ -10,7 +10,11 @@ def main():
     parser.add_argument("--user-id", default="demo_user")
     parser.add_argument("--name", default="")
     parser.add_argument("--roll-no", default="")
-    parser.add_argument("--backend", choices=("local", "groq"), default=os.getenv("TRANSLATOR_BACKEND", "local"))
+    parser.add_argument(
+        "--backend", choices=("local", "groq"),
+        default=os.getenv("TRANSLATOR_BACKEND", "local"),
+        help="local uses the dataset fallback; groq uses Groq when GROQ_API_KEY is set",
+    )
     args = parser.parse_args()
 
     message = args.message or input("Student message: ").strip()

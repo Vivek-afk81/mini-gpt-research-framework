@@ -6,6 +6,20 @@ import os
 import time
 from pathlib import Path
 
+try:
+    from dotenv import load_dotenv
+except ImportError:  # Keep local mode usable before optional dependencies are installed.
+    load_dotenv = None
+
+
+if load_dotenv is not None:
+    load_dotenv(Path(__file__).resolve().parents[3] / ".env")
+
+
+def is_configured():
+    """Return whether Groq can be attempted in this environment."""
+    return bool(os.getenv("GROQ_API_KEY"))
+
 
 def chat(messages, model=None, json_mode=False, temperature=0.0, max_tokens=400, retries=4):
     """Call Groq when configured; return None when no API key is available."""
@@ -24,20 +38,23 @@ def chat(messages, model=None, json_mode=False, temperature=0.0, max_tokens=400,
     ).encode()).hexdigest()
     if cache_path.exists():
         for line in cache_path.read_text(encoding="utf-8").splitlines():
-            item = json.loads(line)
+            try:
+                item = json.loads(line)
+            except json.JSONDecodeError:
+                continue
             if item.get("key") == key:
-                return item["value"]
+                return item.get("value")
 
     client = Groq(api_key=api_key)
     kwargs = {
-        "model": model or os.getenv("GROQ_MODEL", "llama-3.1-8b-instant"),
+        "model": model or os.getenv("GROQ_MODEL", "qwen/qwen3-32b"),
         "messages": messages,
         "temperature": temperature,
         "max_tokens": max_tokens,
     }
     if json_mode:
         kwargs["response_format"] = {"type": "json_object"}
-    for attempt in range(retries):
+    for attempt in range(min(retries, int(os.getenv("GROQ_MAX_RETRIES", "3")))):
         try:
             value = client.chat.completions.create(**kwargs).choices[0].message.content
             with cache_path.open("a", encoding="utf-8") as handle:

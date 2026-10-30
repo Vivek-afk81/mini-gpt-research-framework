@@ -5,6 +5,7 @@ pyyaml
 # Optional runtime features
 gradio
 groq
+python-dotenv
 faiss-cpu
 sentence-transformers
 

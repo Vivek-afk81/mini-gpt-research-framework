@@ -1,6 +1,14 @@
 """Gradio entry point for the LexiFlow demo."""
 
+import sys
+from pathlib import Path
+
 import gradio as gr
+
+# Allow `python app/app.py` to resolve the project package from project_root.
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.lexiflow.pipeline.orchestrator import LexiFlow
 
